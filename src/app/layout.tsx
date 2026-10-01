@@ -1,6 +1,5 @@
 import type { Metadata } from "next"
 import { Fraunces, Manrope } from "next/font/google"
-import { ChatWidget } from "@/components/site/chat-widget"
 import { Footer, MobileCallBar } from "@/components/site/footer"
 import { Header } from "@/components/site/header"
 import { serviceArea, site } from "@/lib/site"
@@ -56,7 +55,6 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
-        <ChatWidget />
       </body>
     </html>
   )

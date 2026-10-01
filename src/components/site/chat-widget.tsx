@@ -22,6 +22,8 @@ function liftAboveCallBar() {
 }
 
 // GoHighLevel chat widget. Loads when the browser is idle so it doesn't slow the first paint.
+// Currently unused: re-enable by rendering <ChatWidget /> at the end of <body> in src/app/layout.tsx.
+// Before you do, make sure no page with the widget also has a form that collects phone numbers (A2P 10DLC rule).
 export function ChatWidget() {
   return (
     <Script

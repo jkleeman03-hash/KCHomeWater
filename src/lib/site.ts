@@ -3,8 +3,8 @@ export const site = {
   name: "KC Home Water",
   legalName: "Whole Home Water LLC",
   url: "https://kchomewater.com",
-  phoneDisplay: "(816) 000-0000", // TODO: real phone number
-  phoneHref: "tel:+18160000000",
+  phoneDisplay: "(816) 705-0137",
+  phoneHref: "tel:+18167050137",
   email: "contact@kchomewater.com",
   description:
     "Whole-home water softeners, carbon filtration, and reverse osmosis drinking water for Kansas City, MO and Johnson County, KS homes. Upfront pricing, installed by licensed local plumbers.",
