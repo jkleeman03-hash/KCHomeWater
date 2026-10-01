@@ -34,44 +34,93 @@ export async function submitQuote(_prev: QuoteState, formData: FormData): Promis
     lead.interest = "Not sure yet, help me decide"
   }
 
-  const apiKey = process.env.RESEND_API_KEY
-  const to = process.env.QUOTE_TO_EMAIL
+  const lines = [
+    `Name: ${lead.name}`,
+    `Phone: ${lead.phone}`,
+    `Email: ${lead.email}`,
+    `ZIP: ${lead.zip}`,
+    `Interested in: ${lead.interest}`,
+    "",
+    lead.message || "(no message)",
+  ]
 
-  if (!apiKey || !to) {
+  // Send to every configured destination. The lead counts as delivered if any one of them accepts it.
+  const destinations = [
+    process.env.RESEND_API_KEY && process.env.QUOTE_TO_EMAIL ? sendEmail(lead, lines) : null,
+    process.env.GHL_API_KEY && process.env.GHL_LOCATION_ID ? sendToGoHighLevel(lead, lines) : null,
+  ].filter((d) => d !== null)
+
+  if (!destinations.length) {
     if (process.env.NODE_ENV !== "production") {
-      console.log("[quote] Email not configured. Lead received:", lead)
+      console.log("[quote] No delivery configured. Lead received:", lead)
       return { status: "success" }
     }
-    console.error("[quote] RESEND_API_KEY / QUOTE_TO_EMAIL not set. Lead NOT delivered:", lead)
+    console.error("[quote] Neither Resend nor GoHighLevel is configured. Lead NOT delivered:", lead)
     return failure()
   }
 
-  const res = await fetch("https://api.resend.com/emails", {
-    method: "POST",
-    headers: { Authorization: `Bearer ${apiKey}`, "Content-Type": "application/json" },
-    body: JSON.stringify({
-      from: process.env.QUOTE_FROM_EMAIL ?? "KC Home Water <onboarding@resend.dev>",
-      to: [to],
-      reply_to: lead.email,
-      subject: `New quote request: ${lead.name} (${lead.zip})`,
-      text: [
-        `Name: ${lead.name}`,
-        `Phone: ${lead.phone}`,
-        `Email: ${lead.email}`,
-        `ZIP: ${lead.zip}`,
-        `Interested in: ${lead.interest}`,
-        "",
-        lead.message || "(no message)",
-      ].join("\n"),
-    }),
-  })
-
-  if (!res.ok) {
-    console.error("[quote] Resend error", res.status, await res.text(), lead)
-    return failure()
-  }
+  const results = await Promise.allSettled(destinations)
+  for (const r of results) if (r.status === "rejected") console.error("[quote]", r.reason, lead)
+  if (!results.some((r) => r.status === "fulfilled")) return failure()
 
   return { status: "success" }
+}
+
+type Lead = { name: string; phone: string; email: string; zip: string; interest: string; message: string }
+
+async function sendEmail(lead: Lead, lines: string[]) {
+  const res = await fetch("https://api.resend.com/emails", {
+    method: "POST",
+    headers: { Authorization: `Bearer ${process.env.RESEND_API_KEY}`, "Content-Type": "application/json" },
+    body: JSON.stringify({
+      from: process.env.QUOTE_FROM_EMAIL ?? "KC Home Water <onboarding@resend.dev>",
+      to: [process.env.QUOTE_TO_EMAIL],
+      reply_to: lead.email,
+      subject: `New quote request: ${lead.name} (${lead.zip})`,
+      text: lines.join("\n"),
+    }),
+  })
+  if (!res.ok) throw new Error(`Resend error ${res.status}: ${await res.text()}`)
+}
+
+// GoHighLevel API v2 with a Private Integration token (scope: contacts.write).
+async function sendToGoHighLevel(lead: Lead, lines: string[]) {
+  const ghl = (path: string, body: unknown) =>
+    fetch(`https://services.leadconnectorhq.com${path}`, {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${process.env.GHL_API_KEY}`,
+        Version: "2021-07-28",
+        "Content-Type": "application/json",
+        Accept: "application/json",
+      },
+      body: JSON.stringify(body),
+    })
+
+  const [firstName, ...rest] = lead.name.split(/\s+/)
+  const digits = lead.phone.replace(/\D/g, "")
+
+  // Upsert matches an existing contact by email/phone, so repeat visitors don't create duplicates.
+  const res = await ghl("/contacts/upsert", {
+    locationId: process.env.GHL_LOCATION_ID,
+    firstName,
+    lastName: rest.join(" ") || undefined,
+    email: lead.email,
+    phone: digits.length === 10 ? `+1${digits}` : `+${digits}`,
+    postalCode: lead.zip,
+    source: "kchomewater.com quote form",
+  })
+  if (!res.ok) throw new Error(`GoHighLevel upsert error ${res.status}: ${await res.text()}`)
+  const { contact } = (await res.json()) as { contact: { id: string } }
+
+  // Tags are added separately because upsert would replace any tags the contact already has.
+  const extras = await Promise.all([
+    ghl(`/contacts/${contact.id}/tags`, { tags: ["website lead", `interest: ${lead.interest}`] }),
+    ghl(`/contacts/${contact.id}/notes`, { body: `Website quote request\n\n${lines.join("\n")}` }),
+  ])
+  for (const r of extras) {
+    if (!r.ok) console.error("[quote] GoHighLevel tag/note error", r.status, await r.text())
+  }
 }
 
 function failure(): QuoteState {
