@@ -31,7 +31,7 @@ export function ChatWidget() {
     <Script
       src="https://widgets.leadconnectorhq.com/loader.js"
       data-resources-url="https://widgets.leadconnectorhq.com/chat-widget/loader.js"
-      data-widget-id="6abed442b9739b9592c5b0d0"
+      data-widget-id="6abed452b9739b9592c5b726"
       data-source="WEB_USER"
       strategy="lazyOnload"
       onLoad={liftAboveCallBar}
