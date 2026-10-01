@@ -1,36 +1,29 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# KC Home Water website
 
-## Getting Started
+Marketing site for KC Home Water (d/b/a of Whole Home Water LLC). Next.js + shadcn/ui, deployed on Vercel.
 
-First, run the development server:
+## Develop
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+npm install
+npm run dev   # http://localhost:3000
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Where things live
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- `src/lib/site.ts` - phone, email, domain, service-area cities, quote form options
+- `src/components/site/` - one file per page section (hero, systems, FAQ, quote form, ...)
+- `src/components/ui/` - shadcn/ui components (add more with `npx shadcn@latest add <name>`)
+- `src/app/actions.ts` - quote form handler (emails each request via Resend)
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Search for `TODO` to find placeholder content that still needs confirming.
 
-## Learn More
+## Quote form email
 
-To learn more about Next.js, take a look at the following resources:
+Set these in Vercel > Project > Settings > Environment Variables (see `.env.example`):
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- `RESEND_API_KEY` - from resend.com
+- `QUOTE_TO_EMAIL` - where quote requests are sent
+- `QUOTE_FROM_EMAIL` - optional, a sender on a domain verified in Resend
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+In local dev without these, submissions are printed to the terminal. In production without them, the form shows an error with the phone number.
