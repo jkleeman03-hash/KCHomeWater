@@ -6,9 +6,23 @@ export const site = {
   phoneDisplay: "(816) 705-0137",
   phoneHref: "tel:+18167050137",
   email: "contact@kchomewater.com",
+  // Must match the address on the A2P 10DLC brand registration.
+  address: {
+    street: "117 S Lexington Street",
+    suite: "STE 100",
+    city: "Harrisonville",
+    state: "MO",
+    zip: "64701",
+    country: "US",
+  },
   description:
     "Whole-home water softeners, carbon filtration, and reverse osmosis drinking water for Kansas City, MO and Johnson County, KS homes. Upfront pricing, installed by licensed local plumbers.",
 }
+
+export const addressLines = [
+  `${site.address.street}, ${site.address.suite}`,
+  `${site.address.city}, ${site.address.state} ${site.address.zip}`,
+]
 
 export const serviceArea = {
   missouri: ["Kansas City", "Independence", "Lee's Summit", "Blue Springs", "Raytown", "Grandview"],

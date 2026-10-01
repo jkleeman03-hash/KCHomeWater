@@ -2,7 +2,7 @@ import Link from "next/link"
 import { Logo } from "@/components/site/logo"
 import { areas } from "@/lib/areas"
 import { services } from "@/lib/services"
-import { site } from "@/lib/site"
+import { addressLines, site } from "@/lib/site"
 
 export function Footer() {
   return (
@@ -15,6 +15,9 @@ export function Footer() {
             <li><a href={site.phoneHref}>{site.phoneDisplay}</a></li>
             <li><a href={`mailto:${site.email}`}>{site.email}</a></li>
           </ul>
+          <address className="mt-3 not-italic">
+            {addressLines.map((line) => <div key={line}>{line}</div>)}
+          </address>
         </div>
         <div>
           <FooterHeading>Services</FooterHeading>
@@ -47,6 +50,10 @@ export function Footer() {
           &copy; {new Date().getFullYear()} {site.legalName} d/b/a {site.name}. All rights reserved.
         </p>
         <p>Installations are performed by independent licensed and insured plumbing contractors.</p>
+        <p className="flex gap-4 text-white">
+          <Link href="/privacy">Privacy Policy</Link>
+          <Link href="/terms">Terms of Service</Link>
+        </p>
       </div>
     </footer>
   )

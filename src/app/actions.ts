@@ -21,6 +21,7 @@ export async function submitQuote(_prev: QuoteState, formData: FormData): Promis
     zip: field(formData, "zip"),
     interest: field(formData, "interest"),
     message: field(formData, "message").slice(0, 2000),
+    smsConsent: formData.get("smsConsent") === "on",
   }
 
   const fieldErrors: QuoteState["fieldErrors"] = {}
@@ -40,6 +41,7 @@ export async function submitQuote(_prev: QuoteState, formData: FormData): Promis
     `Email: ${lead.email}`,
     `ZIP: ${lead.zip}`,
     `Interested in: ${lead.interest}`,
+    `Text messages: ${lead.smsConsent ? `opted in (${new Date().toISOString()})` : "did not opt in"}`,
     "",
     lead.message || "(no message)",
   ]
@@ -66,7 +68,15 @@ export async function submitQuote(_prev: QuoteState, formData: FormData): Promis
   return { status: "success" }
 }
 
-type Lead = { name: string; phone: string; email: string; zip: string; interest: string; message: string }
+type Lead = {
+  name: string
+  phone: string
+  email: string
+  zip: string
+  interest: string
+  message: string
+  smsConsent: boolean
+}
 
 async function sendEmail(lead: Lead, lines: string[]) {
   const res = await fetch("https://api.resend.com/emails", {
@@ -115,7 +125,9 @@ async function sendToGoHighLevel(lead: Lead, lines: string[]) {
 
   // Tags are added separately because upsert would replace any tags the contact already has.
   const extras = await Promise.all([
-    ghl(`/contacts/${contact.id}/tags`, { tags: ["website lead", `interest: ${lead.interest}`] }),
+    ghl(`/contacts/${contact.id}/tags`, {
+      tags: ["website lead", `interest: ${lead.interest}`, ...(lead.smsConsent ? ["sms opt-in"] : [])],
+    }),
     ghl(`/contacts/${contact.id}/notes`, { body: `Website quote request\n\n${lines.join("\n")}` }),
   ])
   for (const r of extras) {

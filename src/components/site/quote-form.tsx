@@ -1,6 +1,7 @@
 "use client"
 
 import { useActionState, useEffect, useState } from "react"
+import Link from "next/link"
 import { CircleCheckIcon, Loader2Icon } from "lucide-react"
 import { submitQuote, type QuoteState } from "@/app/actions"
 import { Button } from "@/components/ui/button"
@@ -122,6 +123,15 @@ function QuoteForm({ defaultInterest }: { defaultInterest: Interest }) {
         />
       </Field>
 
+      <label className="flex gap-3 text-sm leading-relaxed text-muted-foreground">
+        <input type="checkbox" name="smsConsent" className="mt-1 size-4 shrink-0 accent-blue" />
+        <span>
+          <span className="font-semibold text-navy">Optional:</span> Text me about my quote and appointment. I agree to
+          receive text messages from {site.name} at the number above. Message frequency varies. Message &amp; data rates
+          may apply. Reply STOP to opt out or HELP for help. Consent is not a condition of purchase.
+        </span>
+      </label>
+
       {state.message && <p className="text-sm font-semibold text-destructive" role="alert">{state.message}</p>}
 
       <Button type="submit" variant="sun" size="xl" disabled={pending} className="w-full">
@@ -129,7 +139,9 @@ function QuoteForm({ defaultInterest }: { defaultInterest: Interest }) {
         {pending ? "Sending..." : "Request my free quote"}
       </Button>
       <p className="text-center text-sm text-muted-foreground">
-        We&apos;ll only use your info to follow up on your quote. We never sell your information.
+        We&apos;ll only use your info to follow up on your quote. We never sell your information. See our{" "}
+        <Link href="/privacy" className="underline">Privacy Policy</Link> and{" "}
+        <Link href="/terms" className="underline">Terms of Service</Link>.
       </p>
     </form>
   )

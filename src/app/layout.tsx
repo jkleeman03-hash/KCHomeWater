@@ -35,6 +35,14 @@ const jsonLd = {
   url: site.url,
   telephone: site.phoneHref.replace("tel:", ""),
   email: site.email,
+  address: {
+    "@type": "PostalAddress",
+    streetAddress: `${site.address.street}, ${site.address.suite}`,
+    addressLocality: site.address.city,
+    addressRegion: site.address.state,
+    postalCode: site.address.zip,
+    addressCountry: site.address.country,
+  },
   logo: `${site.url}/logo.svg`,
   description: site.description,
   areaServed: [
