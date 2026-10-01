@@ -3,7 +3,7 @@ import Link from "next/link"
 import { ArrowRightIcon, MapPinIcon } from "lucide-react"
 import { Card, CardContent } from "@/components/ui/card"
 import { PageHero } from "@/components/site/page-hero"
-import { QuoteSection } from "@/components/site/quote-form"
+import { QuoteCta } from "@/components/site/quote-cta"
 import { Section, SectionHeading } from "@/components/site/section"
 import { ServicesGrid } from "@/components/site/services-grid"
 import { areas } from "@/lib/areas"
@@ -54,7 +54,7 @@ export default function ServiceAreasPage() {
         </div>
       </Section>
       <ServicesGrid tone="tint" title="Services available across the metro" />
-      <QuoteSection />
+      <QuoteCta />
     </>
   )
 }

@@ -2,7 +2,7 @@ import Link from "next/link"
 import { Logo } from "@/components/site/logo"
 import { areas } from "@/lib/areas"
 import { services } from "@/lib/services"
-import { addressLines, site } from "@/lib/site"
+import { addressLines, quotePath, site } from "@/lib/site"
 
 export function Footer() {
   return (
@@ -41,7 +41,7 @@ export function Footer() {
             <li><Link href="/#how">Our process</Link></li>
             <li><Link href="/#about">About us</Link></li>
             <li><Link href="/#faq">FAQ</Link></li>
-            <li><a href="#quote">Free quote</a></li>
+            <li><a href={quotePath}>Free quote</a></li>
           </ul>
         </div>
       </div>

@@ -1,6 +1,8 @@
 "use client"
 
 import Script from "next/script"
+import { usePathname } from "next/navigation"
+import { quotePath } from "@/lib/site"
 
 // The widget renders inside a shadow root, so page CSS can't reach it. On phones, lift it above the
 // fixed MobileCallBar (hidden at md and up) by adding a style inside that shadow root.
@@ -22,9 +24,9 @@ function liftAboveCallBar() {
 }
 
 // GoHighLevel chat widget. Loads when the browser is idle so it doesn't slow the first paint.
-// Currently unused: re-enable by rendering <ChatWidget /> at the end of <body> in src/app/layout.tsx.
-// Before you do, make sure no page with the widget also has a form that collects phone numbers (A2P 10DLC rule).
+// Skipped on /quote: A2P 10DLC rules say no page with the widget may also have a form that collects phone numbers.
 export function ChatWidget() {
+  if (usePathname() === quotePath) return null
   return (
     <Script
       src="https://widgets.leadconnectorhq.com/loader.js"

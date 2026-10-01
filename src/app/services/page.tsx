@@ -1,7 +1,7 @@
 import type { Metadata } from "next"
 import { HowItWorks } from "@/components/site/how-it-works"
 import { PageHero } from "@/components/site/page-hero"
-import { QuoteSection } from "@/components/site/quote-form"
+import { QuoteCta } from "@/components/site/quote-cta"
 import { ServicesGrid } from "@/components/site/services-grid"
 import { Systems } from "@/components/site/systems"
 
@@ -24,7 +24,7 @@ export default function ServicesPage() {
       <ServicesGrid title="Find the right fit for your water." />
       <Systems />
       <HowItWorks />
-      <QuoteSection />
+      <QuoteCta />
     </>
   )
 }

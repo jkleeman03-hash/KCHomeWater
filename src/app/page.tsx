@@ -2,7 +2,7 @@ import { Faq } from "@/components/site/faq"
 import { Hero } from "@/components/site/hero"
 import { HowItWorks } from "@/components/site/how-it-works"
 import { Problems } from "@/components/site/problems"
-import { QuoteSection } from "@/components/site/quote-form"
+import { QuoteCta } from "@/components/site/quote-cta"
 import { ServiceArea } from "@/components/site/service-area"
 import { ServicesGrid } from "@/components/site/services-grid"
 import { Systems } from "@/components/site/systems"
@@ -19,7 +19,7 @@ export default function Home() {
       <WhyUs />
       <ServiceArea />
       <Faq />
-      <QuoteSection />
+      <QuoteCta />
     </>
   )
 }

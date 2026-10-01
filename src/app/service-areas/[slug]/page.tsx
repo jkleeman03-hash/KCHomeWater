@@ -4,7 +4,7 @@ import { MapPinIcon } from "lucide-react"
 import { Faq } from "@/components/site/faq"
 import { PageHero } from "@/components/site/page-hero"
 import { PointBand, PointCards } from "@/components/site/points"
-import { QuoteSection } from "@/components/site/quote-form"
+import { QuoteCta } from "@/components/site/quote-cta"
 import { Section, SectionHeading } from "@/components/site/section"
 import { ServicesGrid } from "@/components/site/services-grid"
 import { areas, getArea } from "@/lib/areas"
@@ -76,7 +76,7 @@ export default async function AreaPage({ params }: PageProps<"/service-areas/[sl
         ]}
       />
       <Faq title={`${area.name} water questions`} items={area.faqs} />
-      <QuoteSection />
+      <QuoteCta />
     </>
   )
 }

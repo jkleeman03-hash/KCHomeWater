@@ -38,3 +38,10 @@ export const interestOptions = [
 ] as const
 
 export type Interest = (typeof interestOptions)[number]
+
+// The quote form lives only on /quote, the one page without the chat widget (A2P 10DLC rule: no
+// phone-number forms on pages with the widget). Link to it with a plain <a>, not <Link>, so the page
+// loads fresh and a widget already open on the previous page doesn't carry over.
+export const quotePath = "/quote"
+export const quoteHref = (interest?: Interest) =>
+  interest ? `${quotePath}?interest=${encodeURIComponent(interest)}` : quotePath

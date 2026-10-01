@@ -1,6 +1,6 @@
 "use client"
 
-import { useActionState, useEffect, useState } from "react"
+import { useActionState, useState } from "react"
 import Link from "next/link"
 import { CircleCheckIcon, Loader2Icon } from "lucide-react"
 import { submitQuote, type QuoteState } from "@/app/actions"
@@ -9,7 +9,6 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Textarea } from "@/components/ui/textarea"
-import { SELECT_INTEREST_EVENT } from "@/components/site/quote-link"
 import { Section } from "@/components/site/section"
 import { interestOptions, site, type Interest } from "@/lib/site"
 
@@ -17,11 +16,11 @@ const inputClass = "h-11 rounded-lg bg-[#fbfcfe] px-3.5 text-base md:text-base"
 
 export function QuoteSection({ defaultInterest = interestOptions[0] }: { defaultInterest?: Interest }) {
   return (
-    <Section id="quote">
+    <Section id="quote" className="md:pt-16">
       <div className="grid items-start gap-12 lg:grid-cols-[.85fr_1.15fr] lg:gap-16">
         <div>
           <p className="eyebrow">Free quote</p>
-          <h2 className="text-[clamp(1.8rem,3.4vw,2.6rem)] leading-[1.15]">Get your price. No pressure, no obligation.</h2>
+          <h1 className="text-[clamp(2.1rem,4.4vw,3.1rem)] leading-[1.1]">Get your price. No pressure, no obligation.</h1>
           <p className="mt-4 text-[1.08rem] text-muted-foreground">
             Tell us a little about your home and we&apos;ll get back to you within one business day with a clear
             recommendation and price.
@@ -51,12 +50,6 @@ function ContactLine({ label, href, value }: { label: string; href: string; valu
 function QuoteForm({ defaultInterest }: { defaultInterest: Interest }) {
   const [state, formAction, pending] = useActionState<QuoteState, FormData>(submitQuote, { status: "idle" })
   const [interest, setInterest] = useState<Interest>(defaultInterest)
-
-  useEffect(() => {
-    const onSelect = (e: Event) => setInterest((e as CustomEvent<Interest>).detail)
-    window.addEventListener(SELECT_INTEREST_EVENT, onSelect)
-    return () => window.removeEventListener(SELECT_INTEREST_EVENT, onSelect)
-  }, [])
 
   const cardClass = "rounded-2xl border bg-white p-6 shadow-[0_10px_30px_-12px_rgba(19,41,75,.25)] sm:p-8"
 

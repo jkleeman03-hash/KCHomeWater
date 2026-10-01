@@ -1,6 +1,6 @@
 import { CheckIcon } from "lucide-react"
 import { Button } from "@/components/ui/button"
-import { site } from "@/lib/site"
+import { quotePath, site } from "@/lib/site"
 
 const trustPoints = ["Licensed & insured plumbers", "Upfront, written pricing", "Most installs done in one visit"]
 
@@ -20,7 +20,7 @@ export function Hero() {
           </p>
           <div className="mt-7 flex flex-col gap-3 sm:flex-row">
             <Button asChild variant="sun" size="xl">
-              <a href="#quote">Get my free quote</a>
+              <a href={quotePath}>Get my free quote</a>
             </Button>
             <Button asChild variant="navy-outline" size="xl">
               <a href={site.phoneHref}>Call {site.phoneDisplay}</a>

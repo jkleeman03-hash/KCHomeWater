@@ -2,6 +2,7 @@ import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { Section } from "@/components/site/section"
 import { areas } from "@/lib/areas"
+import { quotePath } from "@/lib/site"
 
 export function ServiceArea() {
   return (
@@ -17,7 +18,7 @@ export function ServiceArea() {
           </p>
           <div className="flex flex-col gap-3 sm:flex-row">
             <Button asChild variant="navy" size="xl">
-              <a href="#quote">Check my address</a>
+              <a href={quotePath}>Check my address</a>
             </Button>
             <Button asChild variant="navy-outline" size="xl">
               <Link href="/service-areas">All service areas</Link>
