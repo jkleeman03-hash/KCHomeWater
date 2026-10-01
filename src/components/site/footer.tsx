@@ -6,7 +6,7 @@ import { addressLines, site } from "@/lib/site"
 
 export function Footer() {
   return (
-    <footer className="bg-navy pt-16 pb-24 text-[#b6c6dc] md:pb-7 [&_a:hover]:underline">
+    <footer className="bg-navy pt-16 pb-7 text-[#b6c6dc] [&_a:hover]:underline">
       <div className="container-site grid gap-10 sm:grid-cols-2 lg:grid-cols-[1.4fr_1fr_1fr_1fr]">
         <div>
           <Logo light className="h-24" />
@@ -60,15 +60,4 @@ export function Footer() {
 
 function FooterHeading({ children }: { children: React.ReactNode }) {
   return <h3 className="mb-3 text-sm tracking-widest text-white uppercase">{children}</h3>
-}
-
-export function MobileCallBar() {
-  return (
-    <a
-      href={site.phoneHref}
-      className="fixed inset-x-0 bottom-0 z-40 bg-sun px-4 py-4 text-center font-extrabold text-navy shadow-[0_-6px_20px_-8px_rgba(0,0,0,.3)] md:hidden"
-    >
-      Call for a free quote
-    </a>
-  )
 }

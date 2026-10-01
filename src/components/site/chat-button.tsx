@@ -11,11 +11,13 @@ export function ChatButton({
   variant = "sun",
   size = "xl",
   className,
-  children = "Chat with us",
+  onClick,
+  children = "Free Consultation",
 }: {
   variant?: "sun" | "navy" | "navy-outline"
   size?: "default" | "xl"
   className?: string
+  onClick?: () => void
   children?: React.ReactNode
 }) {
   return (
@@ -23,6 +25,7 @@ export function ChatButton({
       <a
         href={site.phoneHref}
         onClick={(e) => {
+          onClick?.()
           const chat = (window as { leadConnector?: { chatWidget?: ChatWidgetApi } }).leadConnector?.chatWidget
           if (chat) {
             e.preventDefault()

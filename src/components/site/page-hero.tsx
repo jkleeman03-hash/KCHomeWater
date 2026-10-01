@@ -1,8 +1,6 @@
 import Link from "next/link"
 import { ChevronRightIcon } from "lucide-react"
-import { Button } from "@/components/ui/button"
 import { ChatButton } from "@/components/site/chat-button"
-import { site } from "@/lib/site"
 
 type Crumb = { href: string; label: string }
 
@@ -44,10 +42,7 @@ export function PageHero({
             <h1 className="text-[clamp(2.1rem,4.4vw,3.3rem)] leading-[1.1]">{title}</h1>
             <p className="mt-5 max-w-xl text-lg text-muted-foreground">{intro}</p>
             <div className="mt-7 flex flex-col gap-3 sm:flex-row">
-              <Button asChild variant="sun" size="xl">
-                <a href={site.phoneHref}>Call {site.phoneDisplay}</a>
-              </Button>
-              <ChatButton variant="navy-outline" />
+              <ChatButton />
             </div>
           </div>
           {aside}

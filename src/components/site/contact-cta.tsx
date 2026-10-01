@@ -1,7 +1,5 @@
-import { Button } from "@/components/ui/button"
 import { ChatButton } from "@/components/site/chat-button"
 import { Section } from "@/components/site/section"
-import { site } from "@/lib/site"
 
 // Closing call to action at the bottom of each page.
 export function ContactCta() {
@@ -18,9 +16,6 @@ export function ContactCta() {
         </div>
         <div className="flex w-full flex-col gap-3 sm:w-auto sm:flex-row lg:flex-col">
           <ChatButton />
-          <Button asChild variant="navy-outline" size="xl" className="border-white text-white hover:bg-white hover:text-navy">
-            <a href={site.phoneHref}>Call {site.phoneDisplay}</a>
-          </Button>
         </div>
       </div>
     </Section>

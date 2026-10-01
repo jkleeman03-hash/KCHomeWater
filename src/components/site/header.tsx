@@ -5,10 +5,10 @@ import Link from "next/link"
 import { ChevronDownIcon, MenuIcon } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Sheet, SheetContent, SheetTitle, SheetTrigger } from "@/components/ui/sheet"
+import { ChatButton } from "@/components/site/chat-button"
 import { Logo } from "@/components/site/logo"
 import { areas } from "@/lib/areas"
 import { services } from "@/lib/services"
-import { site } from "@/lib/site"
 
 type NavLink = { href: string; label: string; children?: { href: string; label: string }[] }
 
@@ -62,9 +62,7 @@ export function Header() {
               </Link>
             ),
           )}
-          <Button asChild variant="sun" className="h-10 px-5">
-            <a href={site.phoneHref}>Call {site.phoneDisplay}</a>
-          </Button>
+          <ChatButton size="default" className="h-10 px-5" />
         </nav>
 
         <Sheet open={open} onOpenChange={setOpen}>
@@ -98,9 +96,7 @@ export function Header() {
                   )}
                 </div>
               ))}
-              <Button asChild variant="sun" size="xl" className="mt-6">
-                <a href={site.phoneHref}>Call {site.phoneDisplay}</a>
-              </Button>
+              <ChatButton className="mt-6" onClick={() => setOpen(false)} />
             </nav>
           </SheetContent>
         </Sheet>
