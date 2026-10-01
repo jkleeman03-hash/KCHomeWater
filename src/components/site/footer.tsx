@@ -2,7 +2,7 @@ import Link from "next/link"
 import { Logo } from "@/components/site/logo"
 import { areas } from "@/lib/areas"
 import { services } from "@/lib/services"
-import { addressLines, quotePath, site } from "@/lib/site"
+import { addressLines, site } from "@/lib/site"
 
 export function Footer() {
   return (
@@ -10,7 +10,7 @@ export function Footer() {
       <div className="container-site grid gap-10 sm:grid-cols-2 lg:grid-cols-[1.4fr_1fr_1fr_1fr]">
         <div>
           <Logo light className="h-24" />
-          <p className="mt-4">Water softeners, filtration, and reverse osmosis for Kansas City area homes.</p>
+          <p className="mt-4">Water softeners, filtration, and reverse osmosis for homes across the Kansas City metro.</p>
           <ul className="mt-4 grid gap-1 text-white">
             <li><a href={site.phoneHref}>{site.phoneDisplay}</a></li>
             <li><a href={`mailto:${site.email}`}>{site.email}</a></li>
@@ -41,7 +41,6 @@ export function Footer() {
             <li><Link href="/#how">Our process</Link></li>
             <li><Link href="/#about">About us</Link></li>
             <li><Link href="/#faq">FAQ</Link></li>
-            <li><a href={quotePath}>Free quote</a></li>
           </ul>
         </div>
       </div>

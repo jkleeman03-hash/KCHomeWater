@@ -1,7 +1,8 @@
 import Link from "next/link"
 import { ChevronRightIcon } from "lucide-react"
 import { Button } from "@/components/ui/button"
-import { quoteHref, site, type Interest } from "@/lib/site"
+import { ChatButton } from "@/components/site/chat-button"
+import { site } from "@/lib/site"
 
 type Crumb = { href: string; label: string }
 
@@ -12,14 +13,12 @@ export function PageHero({
   title,
   intro,
   aside,
-  interest,
 }: {
   crumbs: Crumb[]
   eyebrow: string
   title: string
   intro: string
   aside?: React.ReactNode
-  interest?: Interest
 }) {
   return (
     <section className="bg-gradient-to-b from-tint to-white pt-8 pb-14 md:pt-12 md:pb-20">
@@ -46,11 +45,9 @@ export function PageHero({
             <p className="mt-5 max-w-xl text-lg text-muted-foreground">{intro}</p>
             <div className="mt-7 flex flex-col gap-3 sm:flex-row">
               <Button asChild variant="sun" size="xl">
-                <a href={quoteHref(interest)}>Get my free quote</a>
-              </Button>
-              <Button asChild variant="navy-outline" size="xl">
                 <a href={site.phoneHref}>Call {site.phoneDisplay}</a>
               </Button>
+              <ChatButton variant="navy-outline" />
             </div>
           </div>
           {aside}

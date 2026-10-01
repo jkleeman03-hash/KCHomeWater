@@ -47,8 +47,10 @@ const jsonLd = {
   logo: `${site.url}/logo.svg`,
   description: site.description,
   areaServed: [
+    "Kansas City metropolitan area",
     ...serviceArea.missouri.map((city) => `${city}, MO`),
     ...serviceArea.kansas.map((city) => `${city}, KS`),
+    ...serviceArea.restOfMetro,
   ],
 }
 

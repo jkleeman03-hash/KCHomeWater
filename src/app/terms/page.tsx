@@ -20,7 +20,7 @@ export default function TermsPage() {
 
       <h2>Our services</h2>
       <p>
-        We help Kansas City area homeowners choose and purchase water softeners, filtration, and reverse osmosis systems.
+        We help homeowners across the Kansas City metro choose and purchase water softeners, filtration, and reverse osmosis systems.
         Installations are performed by independent licensed and insured plumbing contractors. Information on this website
         is general. Prices, product details, and any warranty terms for your project are set out in your written quote or
         agreement, which controls over anything on this website.
@@ -33,8 +33,8 @@ export default function TermsPage() {
           service.
         </li>
         <li>
-          <strong>Opting in:</strong> you opt in by checking the text message box on our quote form or by texting us
-          first. Consent is not a condition of purchase.
+          <strong>Opting in:</strong> you opt in by entering your mobile number and submitting the chat form on our
+          website, or by texting us first. Consent is not a condition of purchase.
         </li>
         <li><strong>Frequency:</strong> message frequency varies.</li>
         <li><strong>Cost:</strong> message and data rates may apply.</li>

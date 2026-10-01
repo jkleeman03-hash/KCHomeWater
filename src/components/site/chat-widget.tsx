@@ -1,8 +1,6 @@
 "use client"
 
 import Script from "next/script"
-import { usePathname } from "next/navigation"
-import { quotePath } from "@/lib/site"
 
 // The widget renders inside a shadow root, so page CSS can't reach it. On phones, lift it above the
 // fixed MobileCallBar (hidden at md and up) by adding a style inside that shadow root.
@@ -24,9 +22,9 @@ function liftAboveCallBar() {
 }
 
 // GoHighLevel chat widget. Loads when the browser is idle so it doesn't slow the first paint.
-// Skipped on /quote: A2P 10DLC rules say no page with the widget may also have a form that collects phone numbers.
+// This is the site's only lead form. A2P 10DLC rules reject a site that has any other form collecting phone
+// numbers or SMS consent on a page with the widget, so don't add one.
 export function ChatWidget() {
-  if (usePathname() === quotePath) return null
   return (
     <Script
       src="https://widgets.leadconnectorhq.com/loader.js"

@@ -1,6 +1,7 @@
 import { CheckIcon } from "lucide-react"
 import { Button } from "@/components/ui/button"
-import { quotePath, site } from "@/lib/site"
+import { ChatButton } from "@/components/site/chat-button"
+import { site } from "@/lib/site"
 
 const trustPoints = ["Licensed & insured plumbers", "Upfront, written pricing", "Most installs done in one visit"]
 
@@ -9,7 +10,7 @@ export function Hero() {
     <section className="bg-gradient-to-b from-tint to-white pt-10 pb-14 md:pt-18 md:pb-22">
       <div className="container-site grid items-center gap-12 md:grid-cols-[1.15fr_.85fr]">
         <div>
-          <p className="eyebrow">Kansas City, MO &amp; Johnson County, KS</p>
+          <p className="eyebrow">Serving the entire Kansas City metro</p>
           <h1 className="text-[clamp(2.3rem,5vw,3.6rem)] leading-[1.1]">
             Softer, cleaner water from every tap in your home.
           </h1>
@@ -20,11 +21,9 @@ export function Hero() {
           </p>
           <div className="mt-7 flex flex-col gap-3 sm:flex-row">
             <Button asChild variant="sun" size="xl">
-              <a href={quotePath}>Get my free quote</a>
-            </Button>
-            <Button asChild variant="navy-outline" size="xl">
               <a href={site.phoneHref}>Call {site.phoneDisplay}</a>
             </Button>
+            <ChatButton variant="navy-outline" />
           </div>
           <ul className="mt-6 flex flex-col gap-x-6 gap-y-2.5 sm:flex-row sm:flex-wrap">
             {trustPoints.map((point) => (

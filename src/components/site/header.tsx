@@ -8,7 +8,7 @@ import { Sheet, SheetContent, SheetTitle, SheetTrigger } from "@/components/ui/s
 import { Logo } from "@/components/site/logo"
 import { areas } from "@/lib/areas"
 import { services } from "@/lib/services"
-import { quotePath, site } from "@/lib/site"
+import { site } from "@/lib/site"
 
 type NavLink = { href: string; label: string; children?: { href: string; label: string }[] }
 
@@ -63,7 +63,7 @@ export function Header() {
             ),
           )}
           <Button asChild variant="sun" className="h-10 px-5">
-            <a href={quotePath}>Free quote</a>
+            <a href={site.phoneHref}>Call {site.phoneDisplay}</a>
           </Button>
         </nav>
 
@@ -99,11 +99,8 @@ export function Header() {
                 </div>
               ))}
               <Button asChild variant="sun" size="xl" className="mt-6">
-                <a href={quotePath} onClick={() => setOpen(false)}>Get a free quote</a>
+                <a href={site.phoneHref}>Call {site.phoneDisplay}</a>
               </Button>
-              <a href={site.phoneHref} className="mt-4 text-center font-semibold text-navy">
-                Call {site.phoneDisplay}
-              </a>
             </nav>
           </SheetContent>
         </Sheet>

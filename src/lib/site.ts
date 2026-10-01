@@ -16,7 +16,7 @@ export const site = {
     country: "US",
   },
   description:
-    "Whole-home water softeners, carbon filtration, and reverse osmosis drinking water for Kansas City, MO and Johnson County, KS homes. Upfront pricing, installed by licensed local plumbers.",
+    "Whole-home water softeners, carbon filtration, and reverse osmosis drinking water for homes across the Kansas City metro. Upfront pricing, installed by licensed local plumbers.",
 }
 
 export const addressLines = [
@@ -24,24 +24,23 @@ export const addressLines = [
   `${site.address.city}, ${site.address.state} ${site.address.zip}`,
 ]
 
+// We serve the whole Kansas City metro. Jackson and Johnson counties have their own pages; the rest are listed together.
 export const serviceArea = {
-  missouri: ["Kansas City", "Independence", "Lee's Summit", "Blue Springs", "Raytown", "Grandview"],
-  kansas: ["Overland Park", "Olathe", "Lenexa", "Shawnee", "Leawood", "Prairie Village", "Mission", "Merriam"],
+  missouri: ["Kansas City", "Independence", "Lee's Summit", "Blue Springs", "Raytown", "Grandview", "Grain Valley"],
+  kansas: ["Overland Park", "Olathe", "Lenexa", "Shawnee", "Leawood", "Prairie Village", "Mission", "Merriam", "Gardner"],
+  restOfMetro: [
+    "Liberty, MO",
+    "Gladstone, MO",
+    "North Kansas City, MO",
+    "Parkville, MO",
+    "Riverside, MO",
+    "Belton, MO",
+    "Raymore, MO",
+    "Harrisonville, MO",
+    "Kansas City, KS",
+    "Bonner Springs, KS",
+    "Leavenworth, KS",
+    "Lansing, KS",
+  ],
 }
 
-export const interestOptions = [
-  "Water softener + carbon filter",
-  "Under-sink reverse osmosis",
-  "Complete package (softener + RO)",
-  "Well water treatment",
-  "Not sure yet, help me decide",
-] as const
-
-export type Interest = (typeof interestOptions)[number]
-
-// The quote form lives only on /quote, the one page without the chat widget (A2P 10DLC rule: no
-// phone-number forms on pages with the widget). Link to it with a plain <a>, not <Link>, so the page
-// loads fresh and a widget already open on the previous page doesn't carry over.
-export const quotePath = "/quote"
-export const quoteHref = (interest?: Interest) =>
-  interest ? `${quotePath}?interest=${encodeURIComponent(interest)}` : quotePath

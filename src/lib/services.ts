@@ -1,5 +1,4 @@
 import { Building2Icon, GlassWaterIcon, HouseIcon, LeafIcon, SparklesIcon, WavesIcon, type LucideIcon } from "lucide-react"
-import type { Interest } from "@/lib/site"
 
 type Faq = { q: string; a: string }
 type Point = { title: string; body: string }
@@ -9,7 +8,6 @@ export type Service = {
   name: string
   icon: LucideIcon
   summary: string
-  interest: Interest
   metaTitle: string
   metaDescription: string
   headline: string
@@ -27,10 +25,9 @@ export const services: Service[] = [
     name: "Whole-Home Water Filtration",
     icon: HouseIcon,
     summary: "Filtered, softened water at every tap, shower, and appliance, treated where water enters your home.",
-    interest: "Water softener + carbon filter",
     metaTitle: "Whole-Home Water Filtration in Kansas City",
     metaDescription:
-      "Whole-home water filtration for Kansas City and Johnson County homes. Carbon filtration and softening installed at your main line by licensed local plumbers.",
+      "Whole-home water filtration for homes across the Kansas City metro. Carbon filtration and softening installed at your main line by licensed local plumbers.",
     headline: "Whole-home water filtration for Kansas City homes",
     intro:
       "A whole-home system treats water right where it enters your house, so every faucet, shower, and appliance gets the same clean water. Ours pairs a carbon filter for taste and odor with a softener for hard-water scale.",
@@ -38,7 +35,7 @@ export const services: Service[] = [
       { label: "Best for", value: "Every tap, shower & appliance" },
       { label: "Installed at", value: "Your main water line" },
       { label: "Typical install", value: "A few hours, one visit" },
-      { label: "Starting at", value: "$3,200 installed" }, // TODO: confirm once pricing is finalized
+      { label: "Pricing", value: "Free written quote" },
     ],
     benefits: [
       {
@@ -88,10 +85,9 @@ export const services: Service[] = [
     name: "Reverse Osmosis Drinking Water",
     icon: GlassWaterIcon,
     summary: "Bottled-water quality from a dedicated faucet at your kitchen sink, for drinking, coffee, and cooking.",
-    interest: "Under-sink reverse osmosis",
     metaTitle: "Reverse Osmosis Drinking Water Systems in Kansas City",
     metaDescription:
-      "Under-sink reverse osmosis drinking water systems for Kansas City and Johnson County homes. Upfront pricing, installed by licensed local plumbers.",
+      "Under-sink reverse osmosis drinking water systems for homes across the Kansas City metro. Upfront pricing, installed by licensed local plumbers.",
     headline: "Reverse osmosis drinking water systems in Kansas City",
     intro:
       "An under-sink reverse osmosis (RO) system gives you great-tasting drinking water from its own faucet. Multi-stage filtration reduces dissolved solids and many contaminants, so you can stop buying and hauling bottled water.",
@@ -99,7 +95,7 @@ export const services: Service[] = [
       { label: "Best for", value: "Drinking, coffee, ice & cooking" },
       { label: "Installed at", value: "Under your kitchen sink" },
       { label: "Typical install", value: "1 to 2 hours" },
-      { label: "Starting at", value: "$600 installed" }, // TODO: confirm once pricing is finalized
+      { label: "Pricing", value: "Free written quote" },
     ],
     benefits: [
       {
@@ -149,10 +145,9 @@ export const services: Service[] = [
     name: "Well Water Treatment",
     icon: WavesIcon,
     summary: "Treatment for private wells, starting with a water test so the system matches what's actually in your water.",
-    interest: "Well water treatment",
     metaTitle: "Well Water Treatment in the Kansas City Area",
     metaDescription:
-      "Well water testing and treatment for homes on private wells around Kansas City and Johnson County. We start with your water test and recommend only what you need.",
+      "Well water testing and treatment for homes on private wells around the Kansas City metro. We start with your water test and recommend only what you need.",
     // TODO: confirm installer network can handle well systems (iron, sulfur, bacteria) before promoting this page
     headline: "Well water treatment for homes around Kansas City",
     intro:
@@ -211,10 +206,9 @@ export const services: Service[] = [
     name: "Water Softener Systems",
     icon: SparklesIcon,
     summary: "Stop scale buildup, spotty dishes, and dry skin by removing the hardness minerals from your water.",
-    interest: "Water softener + carbon filter",
     metaTitle: "Water Softener Installation in Kansas City",
     metaDescription:
-      "Water softener systems for Kansas City and Johnson County homes. Sized to your household, installed by licensed local plumbers, with upfront pricing.",
+      "Water softener systems for homes across the Kansas City metro. Sized to your household, installed by licensed local plumbers, with upfront pricing.",
     headline: "Water softener systems for Kansas City homes",
     intro:
       "Hard water leaves white crust on fixtures, spots on dishes, and residue on skin and hair. A water softener removes the calcium and magnesium that cause it, protecting your plumbing and appliances. Ours comes paired with a carbon filter stage.",
@@ -222,7 +216,7 @@ export const services: Service[] = [
       { label: "Best for", value: "Scale, spots & dry skin" },
       { label: "Installed at", value: "Your main water line" },
       { label: "Upkeep", value: "Add salt as needed" },
-      { label: "Starting at", value: "$3,200 installed" }, // TODO: confirm once pricing is finalized
+      { label: "Pricing", value: "Free written quote" },
     ],
     benefits: [
       {
@@ -272,10 +266,9 @@ export const services: Service[] = [
     name: "Carbon Filtration Systems",
     icon: LeafIcon,
     summary: "Reduce chlorine and chloramine taste and odor throughout your home with activated carbon filtration.",
-    interest: "Water softener + carbon filter",
     metaTitle: "Carbon Water Filtration in Kansas City",
     metaDescription:
-      "Whole-home carbon filtration to reduce chlorine and chloramine taste and odor for Kansas City and Johnson County homes.",
+      "Whole-home carbon filtration to reduce chlorine and chloramine taste and odor for homes across the Kansas City metro.",
     headline: "Carbon filtration systems for Kansas City homes",
     intro:
       "Activated carbon is the workhorse of water filtration. It reduces the chlorine and chloramine that utilities use for disinfection, along with many taste and odor issues. Our whole-home system includes a carbon stage, so every tap benefits.",
@@ -333,18 +326,17 @@ export const services: Service[] = [
     name: "City Water Treatment",
     icon: Building2Icon,
     summary: "Your city water is safe, but it can still be hard and taste like chemicals. We fix both.",
-    interest: "Water softener + carbon filter",
     metaTitle: "City Water Treatment in Kansas City",
     metaDescription:
-      "City water treatment for Kansas City and Johnson County homes. Reduce chloramine taste and hard-water scale with whole-home filtration and softening.",
-    headline: "City water treatment for Kansas City and Johnson County",
+      "City water treatment for homes across the Kansas City metro. Reduce chloramine taste and hard-water scale with whole-home filtration and softening.",
+    headline: "City water treatment for the Kansas City metro",
     intro:
       "City water is treated to be safe to drink. That doesn't mean it's pleasant. Disinfectants affect taste and smell, and hardness minerals still cause scale. Whole-home filtration and softening deal with both, and RO takes drinking water a step further.",
     atAGlance: [
       { label: "Best for", value: "Homes on municipal water" },
       { label: "Common issues", value: "Chloramine & hardness" },
       { label: "Solution", value: "Carbon + softener, plus RO" },
-      { label: "Starting at", value: "$3,200 installed" }, // TODO: confirm once pricing is finalized
+      { label: "Pricing", value: "Free written quote" },
     ],
     benefits: [
       {

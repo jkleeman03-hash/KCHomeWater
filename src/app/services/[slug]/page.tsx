@@ -4,7 +4,7 @@ import { Faq } from "@/components/site/faq"
 import { HowItWorks } from "@/components/site/how-it-works"
 import { PageHero } from "@/components/site/page-hero"
 import { PointBand, PointCards } from "@/components/site/points"
-import { QuoteCta } from "@/components/site/quote-cta"
+import { ContactCta } from "@/components/site/contact-cta"
 import { ServicesGrid } from "@/components/site/services-grid"
 import { getService, services } from "@/lib/services"
 
@@ -38,7 +38,6 @@ export default async function ServicePage({ params }: PageProps<"/services/[slug
         eyebrow={service.name}
         title={service.headline}
         intro={service.intro}
-        interest={service.interest}
         aside={
           <dl className="grid gap-4 rounded-2xl border bg-white p-6 shadow-[0_10px_30px_-12px_rgba(19,41,75,.25)] sm:grid-cols-2 sm:p-8">
             {service.atAGlance.map((item) => (
@@ -55,7 +54,7 @@ export default async function ServicePage({ params }: PageProps<"/services/[slug
       <HowItWorks />
       <Faq title={`${service.name} questions`} items={service.faqs} />
       <ServicesGrid title="Other ways we can help" excludeSlug={service.slug} />
-      <QuoteCta interest={service.interest} />
+      <ContactCta />
     </>
   )
 }
