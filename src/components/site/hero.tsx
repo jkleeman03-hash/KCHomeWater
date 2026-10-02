@@ -11,7 +11,7 @@ export function Hero() {
         <div>
           <p className="eyebrow">Serving the entire Kansas City metro</p>
           <h1 className="text-[clamp(2.3rem,5vw,3.6rem)] leading-[1.1]">
-            Softer, cleaner water from every tap in your home.
+            Kansas City&apos;s Top Whole Home Water &amp; Filtration Service
           </h1>
           <p className="mt-5 max-w-xl text-lg text-muted-foreground">
             We design and install whole-home water softeners, carbon filtration, and reverse osmosis drinking water
