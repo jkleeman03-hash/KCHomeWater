@@ -1,3 +1,4 @@
+import Image from "next/image"
 import { CheckIcon } from "lucide-react"
 import { ChatButton } from "@/components/site/chat-button"
 
@@ -45,26 +46,15 @@ export function CheckBadge() {
 
 function HeroArt() {
   return (
-    <svg viewBox="0 0 420 420" aria-hidden="true" className="mx-auto hidden w-full max-w-md md:block">
-      <defs>
-        <linearGradient id="drop" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0" stopColor="#6FA8DC" />
-          <stop offset="1" stopColor="#2E5F94" />
-        </linearGradient>
-      </defs>
-      <circle cx="210" cy="210" r="200" fill="#e6eef8" />
-      <circle cx="210" cy="210" r="150" fill="none" stroke="#c3d6ec" strokeWidth="2" strokeDasharray="4 10" />
-      <path d="M210 70c-48 60-80 102-80 142a80 80 0 0 0 160 0c0-40-32-82-80-142Z" fill="url(#drop)" />
-      <path d="M172 226a40 40 0 0 0 38 34" fill="none" stroke="#fff" strokeWidth="9" strokeLinecap="round" opacity=".7" />
-      <g fill="#13294B" opacity=".9">
-        <rect x="58" y="300" width="22" height="46" rx="3" />
-        <rect x="84" y="274" width="18" height="72" rx="3" />
-        <rect x="106" y="310" width="24" height="36" rx="3" />
-        <rect x="290" y="288" width="20" height="58" rx="3" />
-        <rect x="314" y="262" width="16" height="84" rx="3" />
-        <rect x="334" y="304" width="26" height="42" rx="3" />
-      </g>
-      <path d="M40 346h340" stroke="#13294B" strokeWidth="4" strokeLinecap="round" />
-    </svg>
+    <div className="relative mx-auto aspect-[4/5] w-full max-w-md overflow-hidden rounded-3xl shadow-[0_24px_50px_-20px_rgba(19,41,75,.45)]">
+      <Image
+        src="/images/drinking-filtered-water.jpg"
+        alt="Woman drinking a glass of filtered water in her kitchen"
+        fill
+        priority
+        sizes="(min-width: 768px) 28rem, 100vw"
+        className="object-cover object-[50%_30%]"
+      />
+    </div>
   )
 }

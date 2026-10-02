@@ -1,3 +1,4 @@
+import Image from "next/image"
 import { Section } from "@/components/site/section"
 
 const reasons = [
@@ -31,6 +32,15 @@ export function WhyUs() {
             high-pressure close. We don&apos;t work that way. We give you honest advice, fair upfront pricing, and
             professional installation.
           </p>
+          <div className="relative mt-8 aspect-[4/3] overflow-hidden rounded-2xl">
+            <Image
+              src="/images/kitchen-faucet.jpg"
+              alt="Clean water running from a kitchen faucet into a hand"
+              fill
+              sizes="(min-width: 1024px) 32rem, 100vw"
+              className="object-cover object-[50%_35%]"
+            />
+          </div>
         </div>
         <ul className="grid gap-7 sm:grid-cols-2">
           {reasons.map((reason) => (
