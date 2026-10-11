@@ -2,6 +2,7 @@
 
 import { useState } from "react"
 import Link from "next/link"
+import { usePathname } from "next/navigation"
 import { ChevronDownIcon, MenuIcon } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Sheet, SheetContent, SheetTitle, SheetTrigger } from "@/components/ui/sheet"
@@ -30,6 +31,8 @@ const links: NavLink[] = [
 
 export function Header() {
   const [open, setOpen] = useState(false)
+  // The Free Consultation page already has the chat open, so the button there would just link to itself.
+  const showChatButton = usePathname() !== "/free-consultation"
 
   return (
     <header className="sticky top-0 z-50 border-b bg-white/95 backdrop-blur">
@@ -62,7 +65,7 @@ export function Header() {
               </Link>
             ),
           )}
-          <ChatButton size="default" className="h-10 px-5" />
+          {showChatButton && <ChatButton size="default" className="h-10 px-5" />}
         </nav>
 
         <Sheet open={open} onOpenChange={setOpen}>
@@ -96,7 +99,7 @@ export function Header() {
                   )}
                 </div>
               ))}
-              <ChatButton className="mt-6" onClick={() => setOpen(false)} />
+              {showChatButton && <ChatButton className="mt-6" onClick={() => setOpen(false)} />}
             </nav>
           </SheetContent>
         </Sheet>
