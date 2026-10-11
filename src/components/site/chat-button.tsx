@@ -1,12 +1,7 @@
-"use client"
-
 import { Button } from "@/components/ui/button"
-import { site } from "@/lib/site"
 
-type ChatWidgetApi = { openWidget: () => void }
-
-// Opens the GoHighLevel chat widget, which is the site's only lead form (A2P 10DLC allows one opt-in source).
-// Falls back to calling us if the widget hasn't loaded yet.
+// Links to /free-consultation, the only page with the GoHighLevel chat widget (A2P 10DLC allows one opt-in source).
+// A plain <a> rather than next/link so the page loads fresh and the widget snippet is in the server HTML.
 export function ChatButton({
   variant = "sun",
   size = "xl",
@@ -22,17 +17,7 @@ export function ChatButton({
 }) {
   return (
     <Button asChild variant={variant} size={size} className={className}>
-      <a
-        href={site.phoneHref}
-        onClick={(e) => {
-          onClick?.()
-          const chat = (window as { leadConnector?: { chatWidget?: ChatWidgetApi } }).leadConnector?.chatWidget
-          if (chat) {
-            e.preventDefault()
-            chat.openWidget()
-          }
-        }}
-      >
+      <a href="/free-consultation" onClick={onClick}>
         {children}
       </a>
     </Button>

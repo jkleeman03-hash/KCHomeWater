@@ -34,7 +34,8 @@ export default function TermsPage() {
         </li>
         <li>
           <strong>Opting in:</strong> you opt in by entering your mobile number and submitting the chat form on our
-          website, or by texting us first. Consent is not a condition of purchase.
+          Free Consultation page ({site.url.replace("https://", "")}/free-consultation), or by texting us first. Consent
+          is not a condition of purchase.
         </li>
         <li><strong>Frequency:</strong> message frequency varies.</li>
         <li><strong>Cost:</strong> message and data rates may apply.</li>
