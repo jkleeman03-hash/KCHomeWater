@@ -14,8 +14,9 @@ export default function PrivacyPage() {
     <LegalPage title="Privacy Policy">
       <p>
         {site.legalName} d/b/a {site.name} (&quot;{site.name},&quot; &quot;we,&quot; &quot;us&quot;) respects your
-        privacy. This policy explains what information we collect through {site.url.replace("https://", "")} and our
-        phone, email, and text message communications, and how we use it.
+        privacy. This policy explains what information we collect through {site.url.replace("https://", "")}, our ads
+        and lead forms on Facebook and Instagram, and our phone, email, and text message communications, and how we use
+        it.
       </p>
 
       <h2>Information we collect</h2>
@@ -23,6 +24,15 @@ export default function PrivacyPage() {
         <li>
           <strong>Information you give us:</strong> your name, phone number, email address, ZIP code or service address,
           the products you&apos;re interested in, and anything you write in a message to us.
+        </li>
+        <li>
+          <strong>Facebook and Instagram lead forms:</strong> if you submit one of our lead forms on Facebook or
+          Instagram, Meta Platforms, Inc. sends us your name, phone number, and email address. Meta&apos;s own handling
+          of your data is covered by the{" "}
+          <a href="https://www.facebook.com/privacy/policy/" target="_blank" rel="noopener noreferrer">
+            Meta Privacy Policy
+          </a>
+          .
         </li>
         <li>
           <strong>Technical information:</strong> our website host automatically records basic technical data such as
@@ -33,7 +43,7 @@ export default function PrivacyPage() {
 
       <h2>How we use your information</h2>
       <ul>
-        <li>To respond to your quote request and answer your questions.</li>
+        <li>To respond to your quote request or lead form submission and answer your questions.</li>
         <li>To schedule, perform, and follow up on your water treatment installation or service.</li>
         <li>To send you text messages, if you have agreed to receive them (see below).</li>
         <li>To keep records required to run our business and meet legal obligations.</li>
