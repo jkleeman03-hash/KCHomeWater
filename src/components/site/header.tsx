@@ -29,6 +29,7 @@ const links: NavLink[] = [
   },
   { href: "/#about", label: "About" },
   { href: "/#faq", label: "FAQ" },
+  { href: "/blog", label: "Blog" },
 ]
 
 export function Header() {

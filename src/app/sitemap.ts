@@ -1,5 +1,6 @@
 import type { MetadataRoute } from "next"
 import { areas } from "@/lib/areas"
+import { getPosts } from "@/lib/blog"
 import { services } from "@/lib/services"
 import { site } from "@/lib/site"
 
@@ -13,6 +14,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${site.url}/pricing/explained`, changeFrequency: "monthly", priority: 0.6 },
     { url: `${site.url}/service-areas`, changeFrequency: "monthly", priority: 0.7 },
     ...areas.map((a) => ({ url: `${site.url}/service-areas/${a.slug}`, changeFrequency: "monthly" as const, priority: 0.7 })),
+    { url: `${site.url}/blog`, changeFrequency: "weekly", priority: 0.6 },
+    ...getPosts().map((p) => ({ url: `${site.url}/blog/${p.slug}`, lastModified: p.date, changeFrequency: "yearly" as const, priority: 0.5 })),
     { url: `${site.url}/privacy`, changeFrequency: "yearly", priority: 0.2 },
     { url: `${site.url}/terms`, changeFrequency: "yearly", priority: 0.2 },
   ]
