@@ -16,6 +16,7 @@ type NavLink = { href: string; label: string; children?: { href: string; label: 
 
 const links: NavLink[] = [
   { href: "/#how", label: "Process" },
+  { href: "/pricing", label: "Pricing" },
   {
     href: "/services",
     label: "Services",
@@ -26,7 +27,6 @@ const links: NavLink[] = [
     label: "Service Areas",
     children: areas.map((a) => ({ href: `/service-areas/${a.slug}`, label: `${a.name}, ${a.state}` })),
   },
-  { href: "/pricing", label: "Pricing" },
   { href: "/#about", label: "About" },
   { href: "/#faq", label: "FAQ" },
 ]
@@ -34,14 +34,15 @@ const links: NavLink[] = [
 export function Header() {
   const [open, setOpen] = useState(false)
   // The Free Consultation page already has the chat open, so the button there would just link to itself.
-  const showChatButton = usePathname() !== "/free-consultation"
+  const pathname = usePathname()
+  const showChatButton = pathname !== "/free-consultation"
 
   return (
     <header className="sticky top-0 z-50 border-b bg-background/85 backdrop-blur">
       <div className="container-site flex h-16 items-center justify-between gap-6">
         <Logo className="h-12" />
 
-        <nav aria-label="Main" className="hidden items-center gap-8 text-sm text-muted-foreground lg:flex">
+        <nav aria-label="Main" className="hidden items-center gap-6 text-sm whitespace-nowrap text-muted-foreground lg:flex xl:gap-8">
           {links.map((link) =>
             link.children ? (
               <div key={link.href} className="group relative">
@@ -72,12 +73,17 @@ export function Header() {
         <div className="hidden items-center gap-5 lg:flex">
           <a
             href={site.phoneHref}
-            className="flex items-center gap-2 font-mono text-sm text-muted-foreground hover:text-foreground"
+            className="hidden items-center gap-2 font-mono text-sm whitespace-nowrap text-muted-foreground hover:text-foreground xl:flex"
           >
             <PhoneIcon className="size-4" />
             {site.phoneDisplay}
           </a>
-          {showChatButton && <ChatButton size="default" className="h-9 px-4" />}
+          <Button asChild className="h-9 px-4">
+            <Link href="/pricing" aria-current={pathname === "/pricing" ? "page" : undefined}>
+              Your Estimate
+            </Link>
+          </Button>
+          {showChatButton && <ChatButton variant="outline" size="default" className="h-9 bg-card px-4" />}
         </div>
 
         <Sheet open={open} onOpenChange={setOpen}>
@@ -111,7 +117,14 @@ export function Header() {
                   )}
                 </div>
               ))}
-              {showChatButton && <ChatButton className="mt-6" onClick={() => setOpen(false)} />}
+              <Button asChild size="xl" className="mt-6">
+                <Link href="/pricing" onClick={() => setOpen(false)}>
+                  Your Estimate
+                </Link>
+              </Button>
+              {showChatButton && (
+                <ChatButton variant="outline" className="mt-3 bg-card" onClick={() => setOpen(false)} />
+              )}
             </nav>
           </SheetContent>
         </Sheet>
