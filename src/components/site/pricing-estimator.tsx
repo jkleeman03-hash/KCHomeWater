@@ -10,8 +10,9 @@ import { scoreEstimate, zipFromAddress, type EstimateInput, type WaterSource } f
 
 // The estimate runs entirely in the browser: nothing typed here is saved or sent anywhere.
 // Once it shows, visitors can call or text us, or book their quote call on the GoHighLevel calendar below it.
-// The calendar's form must collect email only (no phone field, no SMS consent) so it isn't a second SMS opt-in source
-// for GHL's A2P 10DLC check (see chat-widget.tsx). Call and text links just open the visitor's own phone app.
+// The calendar collects a phone number for calls only: its form has no SMS consent checkbox and its SMS notifications
+// are off, so it isn't a second texting opt-in for A2P 10DLC (see chat-widget.tsx). Call and text links just open the
+// visitor's own phone app.
 
 const waterOptions: { value: WaterSource; label: string }[] = [
   { value: "city", label: "City water" },
@@ -191,9 +192,20 @@ function BookingCalendar({ url }: { url: string }) {
         <p className="mt-4 leading-relaxed text-muted-foreground">
           We&apos;ll call at the time you choose, confirm a few details, and give you your exact written price.
         </p>
+        <p className="mt-3 text-sm text-muted-foreground">
+          We only use your phone number to call you at your scheduled time. We won&apos;t text you.
+        </p>
       </div>
       <div className="overflow-hidden rounded-2xl border bg-card">
-        <iframe src={url} title="Book your quote call" scrolling="no" className="h-[720px] w-full border-0" />
+        {/* id comes from GHL's embed code; its resize script matches on it */}
+        <iframe
+          id="2rIMIhjlH2KQdj8ps8bw_1792514793675"
+          src={url}
+          title="Book your quote call"
+          allow="payment"
+          scrolling="no"
+          className="h-[720px] w-full overflow-hidden border-0"
+        />
       </div>
       {/* GHL's script that resizes the calendar iframe to fit its content */}
       <Script src="https://link.msgsndr.com/js/form_embed.js" strategy="afterInteractive" />
