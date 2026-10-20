@@ -60,13 +60,13 @@ export function scoreEstimate({ zip, water, bathrooms, residents, taps }: Estima
     water: water === "city" ? 1 : 2,
     bathrooms: bathrooms <= 2 ? 1 : bathrooms === 3 ? 2 : 3,
     residents: residents <= 2 ? 1 : residents === 3 ? 2 : 3,
-    taps: taps <= 1 ? 1 : 2,
+    taps: taps <= 1 ? 1 : taps === 2 ? 3 : 4,
   }
   const total = Object.values(scores).reduce((sum, s) => sum + s, 0)
   return { scores, total, price: priceByScore[total] }
 }
 
-// Price range shown for each total score (scores run from 5 to 12).
+// Price range shown for each total score (scores run from 5 to 14).
 export const priceByScore: Record<number, { low: number; high: number }> = {
   5: { low: 2450, high: 2800 },
   6: { low: 2650, high: 2900 },
@@ -76,4 +76,6 @@ export const priceByScore: Record<number, { low: number; high: number }> = {
   10: { low: 3250, high: 3600 },
   11: { low: 3400, high: 3800 },
   12: { low: 3650, high: 4050 },
+  13: { low: 3900, high: 4300 },
+  14: { low: 4150, high: 4550 },
 }
