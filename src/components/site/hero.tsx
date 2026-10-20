@@ -1,6 +1,6 @@
 import Image from "next/image"
-import { ArrowRightIcon, CheckIcon, MapPinIcon } from "lucide-react"
-import { ChatButton } from "@/components/site/chat-button"
+import { CheckIcon, MapPinIcon } from "lucide-react"
+import { EstimateButton } from "@/components/site/estimate-button"
 
 const trustPoints = ["Licensed & insured plumbers", "Upfront, written pricing", "Most installs done in one visit"]
 
@@ -22,10 +22,7 @@ export function Hero() {
             local plumber does the install.
           </p>
           <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-            <ChatButton>
-              Free Consultation
-              <ArrowRightIcon />
-            </ChatButton>
+            <EstimateButton />
           </div>
           <ul className="mt-10 grid max-w-lg gap-4 border-t pt-6 sm:grid-cols-3">
             {trustPoints.map((point) => (

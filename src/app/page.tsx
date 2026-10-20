@@ -15,7 +15,7 @@ export default function Home() {
       <WhyUs />
       <ServiceArea />
       <Faq />
-      <ContactCta />
+      <ContactCta estimate />
     </>
   )
 }

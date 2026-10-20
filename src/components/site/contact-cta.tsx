@@ -1,8 +1,9 @@
 import { ChatButton } from "@/components/site/chat-button"
+import { EstimateButton } from "@/components/site/estimate-button"
 import { Section } from "@/components/site/section"
 
-// Closing call to action at the bottom of each page.
-export function ContactCta() {
+// Closing call to action at the bottom of each page. The home page links to the estimator instead.
+export function ContactCta({ estimate = false }: { estimate?: boolean }) {
   return (
     <Section tone="dark">
       <div className="flex flex-col items-start justify-between gap-8 lg:flex-row lg:items-center">
@@ -15,7 +16,7 @@ export function ContactCta() {
           </p>
         </div>
         <div className="flex w-full flex-col gap-3 sm:w-auto sm:flex-row lg:flex-col">
-          <ChatButton variant="bright" />
+          {estimate ? <EstimateButton variant="bright" /> : <ChatButton variant="bright" />}
         </div>
       </div>
     </Section>

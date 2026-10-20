@@ -1,6 +1,6 @@
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
-import { ChatButton } from "@/components/site/chat-button"
+import { EstimateButton } from "@/components/site/estimate-button"
 import { Section } from "@/components/site/section"
 import { areas } from "@/lib/areas"
 import { serviceArea } from "@/lib/site"
@@ -19,7 +19,7 @@ export function ServiceArea() {
             the metro, we cover it.
           </p>
           <div className="flex flex-col gap-3 sm:flex-row">
-            <ChatButton />
+            <EstimateButton />
             <Button asChild variant="outline" size="xl" className="bg-transparent">
               <Link href="/service-areas">All service areas</Link>
             </Button>
