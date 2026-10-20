@@ -8,7 +8,7 @@ export const site = {
   email: "contact@kchomewater.com",
   // GoHighLevel booking calendar shown under the estimate on /pricing; empty hides it. Its phone field is for calls only,
   // so keep its SMS consent checkbox and SMS notifications off (A2P 10DLC).
-  bookingCalendarUrl: "https://api.leadconnectorhq.com/booking/kc-home-water-pps9obj4era?heightMode=fixed&showHeader=true",
+  bookingCalendarUrl: "https://api.leadconnectorhq.com/booking/2rIMIhjlH2KQdj8ps8bw/sv/6ad79bec69c697f9a8a61adf?heightMode=fixed&showHeader=true",
   // Must match the address on the A2P 10DLC brand registration.
   address: {
     street: "117 S Lexington Street",
