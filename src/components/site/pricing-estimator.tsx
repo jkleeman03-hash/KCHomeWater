@@ -1,13 +1,17 @@
 "use client"
 
 import { useState } from "react"
+import Script from "next/script"
+import { MessageSquareIcon, PhoneIcon } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
-import { ChatButton } from "@/components/site/chat-button"
+import { site } from "@/lib/site"
 import { scoreEstimate, zipFromAddress, type EstimateInput, type WaterSource } from "@/lib/pricing"
 
-// Runs entirely in the browser: nothing typed here is saved or sent anywhere. Keep it that way, because a second form
-// that collects contact details would fail GoHighLevel's A2P 10DLC check (see chat-widget.tsx).
+// The estimate runs entirely in the browser: nothing typed here is saved or sent anywhere.
+// Once it shows, visitors can call or text us, or book their quote call on the GoHighLevel calendar below it.
+// The calendar's form must collect email only (no phone field, no SMS consent) so it isn't a second SMS opt-in source
+// for GHL's A2P 10DLC check (see chat-widget.tsx). Call and text links just open the visitor's own phone app.
 
 const waterOptions: { value: WaterSource; label: string }[] = [
   { value: "city", label: "City water" },
@@ -45,41 +49,44 @@ export function PricingEstimator() {
   }
 
   return (
-    <div className="grid items-start gap-10 lg:grid-cols-[1.2fr_1fr] lg:gap-16">
-      <form onSubmit={onSubmit} noValidate className="flex flex-col gap-7 rounded-2xl border bg-card p-6 md:p-10">
-        <div className="flex flex-col gap-2">
-          <label htmlFor="address" className="text-sm font-medium">
-            Address
-          </label>
-          <Input
-            id="address"
-            value={address}
-            onChange={(e) => setAddress(e.target.value)}
-            autoComplete="street-address"
-            placeholder="123 Main St, Lee's Summit, MO 64063"
-            aria-invalid={zipError}
-            aria-describedby={zipError ? "address-error" : undefined}
-            className="h-11"
-          />
-          {zipError && (
-            <p id="address-error" className="text-xs text-destructive">
-              Please include your 5-digit ZIP code.
-            </p>
-          )}
-        </div>
-        <Choice legend="City water or well water?" name="water" options={waterOptions} value={water} onChange={setWater} />
-        <Choice legend="Bathrooms in home" name="bathrooms" options={bathroomOptions} value={bathrooms} onChange={setBathrooms} />
-        <Choice legend="Residents in home" name="residents" options={residentOptions} value={residents} onChange={setResidents} />
-        <Choice legend="Number of drinking taps" name="taps" options={tapOptions} value={taps} onChange={setTaps} />
-        <Button type="submit" size="xl">
-          Get my estimate
-        </Button>
-      </form>
+    <>
+      <div className="grid items-start gap-10 lg:grid-cols-[1.2fr_1fr] lg:gap-16">
+        <form onSubmit={onSubmit} noValidate className="flex flex-col gap-7 rounded-2xl border bg-card p-6 md:p-10">
+          <div className="flex flex-col gap-2">
+            <label htmlFor="address" className="text-sm font-medium">
+              Address
+            </label>
+            <Input
+              id="address"
+              value={address}
+              onChange={(e) => setAddress(e.target.value)}
+              autoComplete="street-address"
+              placeholder="123 Main St, Lee's Summit, MO 64063"
+              aria-invalid={zipError}
+              aria-describedby={zipError ? "address-error" : undefined}
+              className="h-11"
+            />
+            {zipError && (
+              <p id="address-error" className="text-xs text-destructive">
+                Please include your 5-digit ZIP code.
+              </p>
+            )}
+          </div>
+          <Choice legend="City water or well water?" name="water" options={waterOptions} value={water} onChange={setWater} />
+          <Choice legend="Bathrooms in home" name="bathrooms" options={bathroomOptions} value={bathrooms} onChange={setBathrooms} />
+          <Choice legend="Residents in home" name="residents" options={residentOptions} value={residents} onChange={setResidents} />
+          <Choice legend="Number of drinking taps" name="taps" options={tapOptions} value={taps} onChange={setTaps} />
+          <Button type="submit" size="xl">
+            Get my estimate
+          </Button>
+        </form>
 
-      <div aria-live="polite" className="lg:sticky lg:top-28">
-        {input ? <Result input={input} /> : <EmptyResult />}
+        <div aria-live="polite" className="lg:sticky lg:top-28">
+          {input ? <Result input={input} /> : <EmptyResult />}
+        </div>
       </div>
-    </div>
+      {input && site.bookingCalendarUrl && <BookingCalendar url={site.bookingCalendarUrl} />}
+    </>
   )
 }
 
@@ -133,19 +140,63 @@ function EmptyResult() {
 // Shows only the price range. The scores behind it stay internal.
 function Result({ input }: { input: EstimateInput }) {
   const { price } = scoreEstimate(input)
+  const range = `${money.format(price.low)} – ${money.format(price.high)}`
+  // "?&body=" works on both iPhone and Android
+  const smsHref = `sms:${site.phoneHref.replace("tel:", "")}?&body=${encodeURIComponent(
+    `Hi, I got an estimate of ${range} on your website (ZIP ${input.zip}). I'd like my exact quote.`,
+  )}`
 
   return (
     <figure className="animate-rise rounded-2xl border bg-card p-6 shadow-xl shadow-foreground/10 md:p-8">
       <figcaption>
         <p className="eyebrow mb-2">Your estimate</p>
         <p className="font-mono text-3xl font-medium tracking-tight md:text-4xl">
-          {money.format(price.low)} – {money.format(price.high)}
+          {range}
         </p>
       </figcaption>
       <p className="mt-5 border-t border-dashed pt-5 text-sm leading-relaxed text-muted-foreground">
         This is an estimate. Your final price comes in a written quote after a free consultation.
       </p>
-      <ChatButton className="mt-6 w-full" />
+      <p className="mt-6 text-sm font-medium">Get your exact quote:</p>
+      <div className="mt-3 grid grid-cols-2 gap-3">
+        <Button asChild size="xl" variant={site.bookingCalendarUrl ? "outline" : "default"}>
+          <a href={site.phoneHref}>
+            <PhoneIcon />
+            Call us
+          </a>
+        </Button>
+        <Button asChild size="xl" variant="outline">
+          <a href={smsHref}>
+            <MessageSquareIcon />
+            Text us
+          </a>
+        </Button>
+      </div>
+      {site.bookingCalendarUrl && (
+        <Button asChild size="xl" className="mt-3 w-full">
+          <a href="#book">Book a call</a>
+        </Button>
+      )}
+      <p className="mt-4 text-center font-mono text-xs text-muted-foreground">{site.phoneDisplay}</p>
     </figure>
+  )
+}
+
+function BookingCalendar({ url }: { url: string }) {
+  return (
+    <div id="book" className="mt-16 scroll-mt-24 animate-rise border-t pt-16">
+      <div className="mb-8 max-w-2xl">
+        <p className="eyebrow">Next step</p>
+        <h2 className="text-3xl md:text-4xl">Pick a time for your quote call</h2>
+        <p className="mt-4 leading-relaxed text-muted-foreground">
+          We&apos;ll call at the time you choose, confirm a few details, and give you your exact written price.
+        </p>
+      </div>
+      <div className="overflow-hidden rounded-2xl border bg-card">
+        <iframe src={url} title="Book your quote call" scrolling="no" className="h-[720px] w-full border-0" />
+      </div>
+      {/* GHL's script that resizes the calendar iframe to fit its content */}
+      <Script src="https://link.msgsndr.com/js/form_embed.js" strategy="afterInteractive" />
+    </div>
   )
 }

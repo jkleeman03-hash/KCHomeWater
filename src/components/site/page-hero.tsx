@@ -11,12 +11,14 @@ export function PageHero({
   title,
   intro,
   aside,
+  cta = true,
 }: {
   crumbs: Crumb[]
   eyebrow: string
   title: string
   intro: string
   aside?: React.ReactNode
+  cta?: boolean
 }) {
   return (
     <section className="pt-8 pb-20 md:pt-12 md:pb-24">
@@ -41,9 +43,11 @@ export function PageHero({
             <p className="eyebrow">{eyebrow}</p>
             <h1 className="text-4xl leading-tight md:text-5xl md:leading-[1.08]">{title}</h1>
             <p className="mt-6 max-w-xl text-lg leading-relaxed text-pretty text-muted-foreground">{intro}</p>
-            <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-              <ChatButton />
-            </div>
+            {cta && (
+              <div className="mt-8 flex flex-col gap-3 sm:flex-row">
+                <ChatButton />
+              </div>
+            )}
           </div>
           {aside}
         </div>

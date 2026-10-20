@@ -18,6 +18,7 @@ export default function PricingPage() {
         crumbs={[{ href: "/pricing", label: "Pricing" }]}
         eyebrow="Pricing"
         title="Estimate your price in under a minute"
+        cta={false}
         intro="Tell us a few things about your home and we'll show you an estimated price range. Then book a free consultation for a clear, written quote."
       />
       <Section tone="card" className="pt-12 md:pt-16">

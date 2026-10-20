@@ -6,6 +6,9 @@ export const site = {
   phoneDisplay: "(816) 705-0137",
   phoneHref: "tel:+18167050137",
   email: "contact@kchomewater.com",
+  // GoHighLevel booking calendar shown under the estimate on /pricing; empty hides it. Its form must collect email only
+  // (no phone, no SMS consent) to stay clear of A2P 10DLC. TODO: paste the booking link from GHL (Calendars > Share).
+  bookingCalendarUrl: "",
   // Must match the address on the A2P 10DLC brand registration.
   address: {
     street: "117 S Lexington Street",
