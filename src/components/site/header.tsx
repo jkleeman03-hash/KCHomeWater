@@ -26,6 +26,7 @@ const links: NavLink[] = [
     label: "Service Areas",
     children: areas.map((a) => ({ href: `/service-areas/${a.slug}`, label: `${a.name}, ${a.state}` })),
   },
+  { href: "/pricing", label: "Pricing" },
   { href: "/#about", label: "About" },
   { href: "/#faq", label: "FAQ" },
 ]
