@@ -12,6 +12,7 @@ export function PageHero({
   intro,
   aside,
   cta = true,
+  actions,
 }: {
   crumbs: Crumb[]
   eyebrow: string
@@ -19,6 +20,8 @@ export function PageHero({
   intro: string
   aside?: React.ReactNode
   cta?: boolean
+  // Buttons shown in place of the Free Consultation button
+  actions?: React.ReactNode
 }) {
   return (
     <section className="pt-8 pb-20 md:pt-12 md:pb-24">
@@ -43,10 +46,8 @@ export function PageHero({
             <p className="eyebrow">{eyebrow}</p>
             <h1 className="text-4xl leading-tight md:text-5xl md:leading-[1.08]">{title}</h1>
             <p className="mt-6 max-w-xl text-lg leading-relaxed text-pretty text-muted-foreground">{intro}</p>
-            {cta && (
-              <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-                <ChatButton />
-              </div>
+            {(actions || cta) && (
+              <div className="mt-8 flex flex-col gap-3 sm:flex-row">{actions ?? <ChatButton />}</div>
             )}
           </div>
           {aside}
