@@ -135,7 +135,7 @@ function EmptyResult() {
   return (
     <div className="rounded-2xl border border-dashed p-8 text-center">
       <p className="eyebrow mb-2">Your estimate</p>
-      <p className="text-muted-foreground">Fill in your home details and select Get my estimate.</p>
+      <p className="text-muted-foreground">Fill in your home details, get your estimate, and book a time.</p>
     </div>
   )
 }
