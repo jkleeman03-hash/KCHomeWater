@@ -22,35 +22,35 @@ const expectations = [
 // The only page with the GoHighLevel chat widget. Every "Free Consultation" button links here.
 export default function FreeConsultationPage() {
   return (
-    <section className="bg-gradient-to-b from-tint to-white pt-8 pb-20 md:pt-12 md:pb-28">
+    <section className="pt-8 pb-20 md:pt-12 md:pb-28">
       <div className="container-site">
-        <nav aria-label="Breadcrumb" className="mb-8 text-sm">
+        <nav aria-label="Breadcrumb" className="mb-10 font-mono text-xs">
           <ol className="flex flex-wrap items-center gap-1.5 text-muted-foreground">
-            <li><Link href="/" className="hover:text-blue">Home</Link></li>
+            <li><Link href="/" className="hover:text-foreground">Home</Link></li>
             <li className="flex items-center gap-1.5">
               <ChevronRightIcon className="size-3.5" />
-              <span aria-current="page" className="font-semibold text-navy">Free Consultation</span>
+              <span aria-current="page" className="font-medium text-foreground">Free Consultation</span>
             </li>
           </ol>
         </nav>
-        <div className="max-w-2xl">
+        <div className="max-w-2xl animate-rise">
           <p className="eyebrow">Free consultation</p>
-          <h1 className="text-[clamp(2.1rem,4.4vw,3.3rem)] leading-[1.1]">Get your price. No pressure, no obligation.</h1>
-          <p className="mt-5 text-lg text-muted-foreground">
+          <h1 className="text-4xl leading-tight md:text-5xl md:leading-[1.08]">Get your price. No pressure, no obligation.</h1>
+          <p className="mt-6 text-lg leading-relaxed text-pretty text-muted-foreground">
             Use the chat window in the bottom corner of the screen to tell us a little about your home. We&apos;ll get
             back to you within one business day with a clear recommendation and price.
           </p>
-          <ul className="mt-8 grid gap-3">
+          <ul className="mt-10 grid gap-4 border-t pt-8">
             {expectations.map((item) => (
-              <li key={item} className="flex items-start gap-2.5 text-[1.02rem] font-semibold text-navy">
-                <span className="mt-1"><CheckBadge /></span>
+              <li key={item} className="flex items-start gap-3 font-medium">
+                <CheckBadge />
                 {item}
               </li>
             ))}
           </ul>
           <p className="mt-8 text-muted-foreground">
             Rather talk? Call us at{" "}
-            <a href={site.phoneHref} className="font-semibold text-blue hover:underline">{site.phoneDisplay}</a>.
+            <a href={site.phoneHref} className="font-mono font-medium text-foreground underline underline-offset-4">{site.phoneDisplay}</a>.
           </p>
         </div>
       </div>

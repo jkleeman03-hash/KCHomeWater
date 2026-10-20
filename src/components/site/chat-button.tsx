@@ -3,13 +3,13 @@ import { Button } from "@/components/ui/button"
 // Links to /free-consultation, the only page with the GoHighLevel chat widget (A2P 10DLC allows one opt-in source).
 // A plain <a> rather than next/link so the page loads fresh and the widget snippet is in the server HTML.
 export function ChatButton({
-  variant = "sun",
+  variant = "default",
   size = "xl",
   className,
   onClick,
   children = "Free Consultation",
 }: {
-  variant?: "sun" | "navy" | "navy-outline"
+  variant?: "default" | "outline" | "bright"
   size?: "default" | "xl"
   className?: string
   onClick?: () => void

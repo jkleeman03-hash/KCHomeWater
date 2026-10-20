@@ -40,12 +40,12 @@ export default async function AreaPage({ params }: PageProps<"/service-areas/[sl
         title={area.headline}
         intro={area.intro}
       />
-      <Section>
+      <Section tone="card">
         <SectionHeading eyebrow="Communities" title={`Cities we serve in ${area.name}`} />
-        <ul className="grid grid-cols-2 gap-4 md:grid-cols-4">
+        <ul className="grid grid-cols-2 gap-px overflow-hidden rounded-2xl border bg-border md:grid-cols-4">
           {area.cities.map((city) => (
-            <li key={city} className="flex items-center gap-3 rounded-xl border bg-tint px-5 py-4 font-semibold text-navy">
-              <MapPinIcon className="size-5 shrink-0 text-blue" />
+            <li key={city} className="flex items-center gap-3 bg-card px-5 py-4 text-sm font-medium">
+              <MapPinIcon className="size-4 shrink-0 text-primary" />
               {city}, {area.state}
             </li>
           ))}

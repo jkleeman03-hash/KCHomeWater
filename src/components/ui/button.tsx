@@ -18,9 +18,8 @@ const buttonVariants = cva(
         destructive:
           "bg-destructive/10 text-destructive hover:bg-destructive/20 focus-visible:border-destructive/40 focus-visible:ring-destructive/20 dark:bg-destructive/20 dark:hover:bg-destructive/30 dark:focus-visible:ring-destructive/40",
         link: "text-primary underline-offset-4 hover:underline",
-        sun: "rounded-full bg-sun font-bold text-navy shadow-[0_6px_18px_-8px_rgba(217,154,34,.8)] hover:bg-sun-dark",
-        navy: "rounded-full bg-navy font-bold text-white hover:bg-navy-light",
-        "navy-outline": "rounded-full border-2 border-navy font-bold text-navy hover:bg-navy hover:text-white",
+        // For dark sections
+        bright: "bg-accent text-accent-foreground hover:bg-accent/85",
       },
       size: {
         default:

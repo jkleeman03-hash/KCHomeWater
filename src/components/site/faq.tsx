@@ -1,4 +1,4 @@
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion"
+import { PlusIcon } from "lucide-react"
 import { Section, SectionHeading } from "@/components/site/section"
 
 const homeFaqs = [
@@ -38,19 +38,20 @@ export function Faq({
   title?: string
 }) {
   return (
-    <Section id="faq" tone="tint">
-      <div className="mx-auto max-w-3xl">
-        <SectionHeading eyebrow="FAQ" title={title} />
-        <Accordion type="single" collapsible className="grid gap-3">
+    <Section id="faq" tone="card">
+      <div className="grid gap-10 lg:grid-cols-[1fr_1.6fr] lg:gap-20">
+        <SectionHeading eyebrow="FAQ" title={title} className="mb-0" />
+        <div className="flex flex-col">
           {items.map((item) => (
-            <AccordionItem key={item.q} value={item.q} className="rounded-xl border bg-white px-6 last:border-b">
-              <AccordionTrigger className="py-5 text-base font-bold text-navy hover:no-underline">
+            <details key={item.q} className="group border-b py-5 first:pt-0">
+              <summary className="flex cursor-pointer list-none items-center justify-between gap-6 text-lg font-medium text-foreground [&::-webkit-details-marker]:hidden">
                 {item.q}
-              </AccordionTrigger>
-              <AccordionContent className="pb-5 text-base text-muted-foreground">{item.a}</AccordionContent>
-            </AccordionItem>
+                <PlusIcon className="size-5 shrink-0 text-primary transition-transform group-open:rotate-45" />
+              </summary>
+              <p className="mt-3 max-w-prose leading-relaxed text-muted-foreground">{item.a}</p>
+            </details>
           ))}
-        </Accordion>
+        </div>
       </div>
     </Section>
   )

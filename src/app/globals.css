@@ -8,14 +8,14 @@
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --font-sans: var(--font-manrope);
-  --font-heading: var(--font-fraunces);
+  --font-heading: var(--font-manrope);
+  --font-mono: var(--font-plex-mono);
+  --font-logo: var(--font-fraunces);
   --color-navy: var(--navy);
   --color-navy-light: var(--navy-light);
   --color-blue: var(--blue);
   --color-sky: var(--sky);
   --color-tint: var(--tint);
-  --color-sun: var(--sun);
-  --color-sun-dark: var(--sun-dark);
   --color-ring: var(--ring);
   --color-input: var(--input);
   --color-border: var(--border);
@@ -42,33 +42,32 @@
 }
 
 :root {
-  /* Brand */
-  --navy: #13294B;
-  --navy-light: #1d3a66;
-  --blue: #2E5F94;
-  --sky: #6FA8DC;
-  --tint: #eef4fa;
-  --sun: #f2b33d;
-  --sun-dark: #d99a22;
+  color-scheme: light;
+  /* Cool mineral white, deep ink navy, mineral blue, pale steel, clear aqua */
+  --navy: oklch(0.23 0.035 248);
+  --navy-light: oklch(0.3 0.045 248);
+  --blue: oklch(0.46 0.105 232);
+  --sky: oklch(0.83 0.11 195);
+  --tint: oklch(0.94 0.014 225);
 
-  /* shadcn tokens mapped to the brand */
-  --background: #ffffff;
-  --foreground: #1b2b36;
-  --card: #ffffff;
-  --card-foreground: #1b2b36;
-  --popover: #ffffff;
-  --popover-foreground: #1b2b36;
-  --primary: var(--navy);
-  --primary-foreground: #ffffff;
+  /* shadcn tokens */
+  --background: oklch(0.982 0.004 220);
+  --foreground: var(--navy);
+  --card: oklch(1 0 0);
+  --card-foreground: var(--navy);
+  --popover: oklch(1 0 0);
+  --popover-foreground: var(--navy);
+  --primary: var(--blue);
+  --primary-foreground: oklch(0.985 0.004 220);
   --secondary: var(--tint);
   --secondary-foreground: var(--navy);
   --muted: var(--tint);
-  --muted-foreground: #5a6b76;
-  --accent: var(--tint);
+  --muted-foreground: oklch(0.47 0.025 245);
+  --accent: var(--sky);
   --accent-foreground: var(--navy);
-  --destructive: oklch(0.577 0.245 27.325);
-  --border: #d9e3ee;
-  --input: #d9e3ee;
+  --destructive: oklch(0.56 0.2 27);
+  --border: oklch(0.89 0.014 230);
+  --input: oklch(0.86 0.016 230);
   --ring: var(--blue);
   --radius: 0.75rem;
 }
@@ -90,24 +89,42 @@
   }
   h1,
   h2 {
-    @apply font-heading font-bold tracking-tight text-navy;
+    @apply font-semibold tracking-tight text-balance text-navy;
   }
   h3 {
-    @apply font-bold text-navy;
+    @apply font-semibold text-navy;
   }
+}
+
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@utility animate-rise {
+  animation: rise 0.7s cubic-bezier(0.2, 0.7, 0.2, 1) both;
 }
 
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
   }
+  .animate-rise {
+    animation: none;
+  }
 }
 
 @utility container-site {
-  width: min(1160px, 100% - 32px);
+  width: min(72rem, 100% - 32px);
   margin-inline: auto;
 }
 
 @utility eyebrow {
-  @apply mb-3 text-[0.8rem] font-bold tracking-[0.12em] text-blue uppercase;
+  @apply mb-4 font-mono text-xs tracking-widest text-blue uppercase;
 }

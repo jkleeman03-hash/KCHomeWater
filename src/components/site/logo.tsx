@@ -2,7 +2,7 @@ import { useId } from "react"
 import Link from "next/link"
 import { cn } from "@/lib/utils"
 
-// Brand logo (original file: public/logo.svg). Inlined so the wordmark renders in the site's Fraunces font.
+// Brand logo (original file: public/logo.svg). Inlined so the wordmark renders in Fraunces.
 // The light variant is for dark backgrounds: navy becomes white and the blues are lightened.
 export function LogoMark({ light = false, className }: { light?: boolean; className?: string }) {
   const gradientId = useId()
@@ -18,13 +18,13 @@ export function LogoMark({ light = false, className }: { light?: boolean; classN
         </linearGradient>
       </defs>
       <path d="M65,110 L140,40 L215,110 L215,175 L65,175 Z" fill="none" stroke={ink} strokeWidth="7" strokeLinejoin="round" />
-      <text x="140" y="100" textAnchor="middle" fontSize="22" letterSpacing="1" fill={ink} className="font-heading font-bold">
+      <text x="140" y="100" textAnchor="middle" fontSize="22" letterSpacing="1" fill={ink} className="font-logo font-bold">
         KC
       </text>
       <path d="M95,123 Q120,112 140,123 Q160,134 185,123" fill="none" stroke={`url(#${gradientId})`} strokeWidth="5.5" strokeLinecap="round" />
       <path d="M95,112 C89,118 87,121 87,125 C87,130 90,134 95,134 C100,134 103,130 103,125 C103,121 101,118 95,112 Z" fill={blueDark} />
       <path d="M185,112 C179,118 177,121 177,125 C177,130 180,134 185,134 C190,134 193,130 193,125 C193,121 191,118 185,112 Z" fill={blueLight} />
-      <text x="140" y="158" textAnchor="middle" fontSize="16" letterSpacing="2" fill={ink} className="font-heading font-bold">
+      <text x="140" y="158" textAnchor="middle" fontSize="16" letterSpacing="2" fill={ink} className="font-logo font-bold">
         HOME WATER
       </text>
     </svg>

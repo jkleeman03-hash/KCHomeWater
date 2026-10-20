@@ -22,24 +22,26 @@ const steps = [
 export function HowItWorks() {
   return (
     <Section id="how">
-      <SectionHeading eyebrow="How it works" title="From quote to clean water, without the runaround." />
-      <ol className="grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
-        {steps.map((step, i) => (
-          <li key={step.title} className="relative">
-            {i < steps.length - 1 && (
-              <span
-                aria-hidden="true"
-                className="absolute top-6 right-[-14px] left-16 hidden h-0.5 bg-[repeating-linear-gradient(90deg,var(--border)_0_8px,transparent_8px_14px)] lg:block"
-              />
-            )}
-            <span className="mb-5 grid size-12 place-items-center rounded-full bg-navy text-lg font-extrabold text-white">
-              {i + 1}
-            </span>
-            <h3 className="mb-2 text-lg">{step.title}</h3>
-            <p className="text-muted-foreground">{step.body}</p>
-          </li>
-        ))}
-      </ol>
+      <div className="grid gap-12 lg:grid-cols-2 lg:gap-20">
+        <SectionHeading
+          eyebrow="How it works"
+          title="From quote to clean water, without the runaround."
+          className="mb-0 lg:sticky lg:top-28 lg:self-start"
+        />
+        <ol className="flex flex-col">
+          {steps.map((step, i) => (
+            <li key={step.title} className="grid grid-cols-[3rem_1fr] gap-4 border-t py-8 first:border-t-0 first:pt-0">
+              <span className="font-mono text-sm text-primary" aria-hidden="true">
+                {String(i + 1).padStart(2, "0")}
+              </span>
+              <div className="flex flex-col gap-2">
+                <h3 className="text-xl">{step.title}</h3>
+                <p className="leading-relaxed text-muted-foreground">{step.body}</p>
+              </div>
+            </li>
+          ))}
+        </ol>
+      </div>
     </Section>
   )
 }

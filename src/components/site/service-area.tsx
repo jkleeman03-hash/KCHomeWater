@@ -11,21 +11,21 @@ export function ServiceArea() {
       <div className="grid items-center gap-12 lg:grid-cols-2 lg:gap-16">
         <div>
           <p className="eyebrow">Service area</p>
-          <h2 className="text-[clamp(1.8rem,3.4vw,2.6rem)] leading-[1.15]">
+          <h2 className="text-3xl md:text-4xl">
             Serving the entire Kansas City metro, on both sides of State Line.
           </h2>
-          <p className="mt-4 mb-7 text-muted-foreground">
+          <p className="mt-4 mb-8 leading-relaxed text-pretty text-muted-foreground">
             From the Northland to Cass County and from Independence to Olathe. Don&apos;t see your city? If it&apos;s in
             the metro, we cover it.
           </p>
           <div className="flex flex-col gap-3 sm:flex-row">
-            <ChatButton variant="navy" />
-            <Button asChild variant="navy-outline" size="xl">
+            <ChatButton />
+            <Button asChild variant="outline" size="xl" className="bg-transparent">
               <Link href="/service-areas">All service areas</Link>
             </Button>
           </div>
         </div>
-        <div className="grid grid-cols-2 gap-6 rounded-2xl bg-tint p-6 sm:p-8">
+        <div className="grid grid-cols-2 gap-8 rounded-2xl border bg-secondary p-6 sm:p-8">
           {areas.map((area) => (
             <CityList key={area.slug} href={`/service-areas/${area.slug}`} heading={`${area.name}, ${area.state}`} cities={area.cities} />
           ))}
@@ -51,10 +51,10 @@ export function CityList({
 }) {
   return (
     <div>
-      <h3 className="mb-3 text-sm tracking-widest text-blue uppercase">
+      <h3 className="mb-3 font-mono text-xs font-medium tracking-widest text-primary uppercase">
         <Link href={href} className="hover:underline">{heading}</Link>
       </h3>
-      <ul className={`grid gap-2 font-semibold text-navy ${columns ? "grid-cols-2" : ""}`}>
+      <ul className={`grid gap-2 text-sm font-medium ${columns ? "grid-cols-2" : ""}`}>
         {cities.map((city) => (
           <li key={city}>{city}</li>
         ))}

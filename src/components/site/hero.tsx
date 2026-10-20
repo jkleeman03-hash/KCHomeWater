@@ -1,29 +1,35 @@
 import Image from "next/image"
-import { CheckIcon } from "lucide-react"
+import { ArrowRightIcon, CheckIcon, MapPinIcon } from "lucide-react"
 import { ChatButton } from "@/components/site/chat-button"
 
 const trustPoints = ["Licensed & insured plumbers", "Upfront, written pricing", "Most installs done in one visit"]
 
 export function Hero() {
   return (
-    <section className="bg-gradient-to-b from-tint to-white pt-10 pb-14 md:pt-18 md:pb-22">
-      <div className="container-site grid items-center gap-12 md:grid-cols-[1.15fr_.85fr]">
-        <div>
-          <p className="eyebrow">Serving the entire Kansas City metro</p>
-          <h1 className="text-[clamp(2.3rem,5vw,3.6rem)] leading-[1.1]">
+    <section className="relative overflow-hidden">
+      <div className="container-site grid items-center gap-12 pt-12 pb-20 md:pt-20 lg:grid-cols-[1.05fr_1fr] lg:gap-16">
+        <div className="flex animate-rise flex-col">
+          <p className="eyebrow flex items-center gap-2">
+            <MapPinIcon className="size-4" />
+            Serving the entire Kansas City metro
+          </p>
+          <h1 className="text-4xl leading-tight md:text-6xl md:leading-[1.05]">
             Kansas City&apos;s Top Whole Home Water &amp; Filtration Service
           </h1>
-          <p className="mt-5 max-w-xl text-lg text-muted-foreground">
+          <p className="mt-6 max-w-xl text-lg leading-relaxed text-pretty text-muted-foreground">
             We design and install whole-home water softeners, carbon filtration, and reverse osmosis drinking water
             systems for Kansas City homes. You get upfront pricing with no pushy in-home sales pitch, and a licensed
             local plumber does the install.
           </p>
-          <div className="mt-7 flex flex-col gap-3 sm:flex-row">
-            <ChatButton />
+          <div className="mt-8 flex flex-col gap-3 sm:flex-row">
+            <ChatButton>
+              Free Consultation
+              <ArrowRightIcon />
+            </ChatButton>
           </div>
-          <ul className="mt-6 flex flex-col gap-x-6 gap-y-2.5 sm:flex-row sm:flex-wrap">
+          <ul className="mt-10 grid max-w-lg gap-4 border-t pt-6 sm:grid-cols-3">
             {trustPoints.map((point) => (
-              <li key={point} className="flex items-center gap-2 text-[0.95rem] font-semibold text-navy">
+              <li key={point} className="flex items-start gap-2 text-sm font-medium">
                 <CheckBadge />
                 {point}
               </li>
@@ -37,22 +43,18 @@ export function Hero() {
 }
 
 export function CheckBadge() {
-  return (
-    <span className="grid size-[18px] shrink-0 place-items-center rounded-full bg-blue text-white">
-      <CheckIcon className="size-3" strokeWidth={3.5} />
-    </span>
-  )
+  return <CheckIcon className="mt-0.5 size-4 shrink-0 text-primary" strokeWidth={2.5} />
 }
 
 function HeroArt() {
   return (
-    <div className="relative mx-auto aspect-[4/5] w-full max-w-md overflow-hidden rounded-3xl shadow-[0_24px_50px_-20px_rgba(19,41,75,.45)]">
+    <div className="relative aspect-[4/5] w-full animate-rise overflow-hidden rounded-2xl bg-muted [animation-delay:150ms] sm:aspect-square lg:aspect-[4/5]">
       <Image
         src="/images/drinking-filtered-water.jpg"
         alt="Woman drinking a glass of filtered water in her kitchen"
         fill
         priority
-        sizes="(min-width: 768px) 28rem, 100vw"
+        sizes="(min-width: 1024px) 520px, 100vw"
         className="object-cover object-[50%_30%]"
       />
     </div>

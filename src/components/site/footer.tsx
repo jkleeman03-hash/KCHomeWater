@@ -6,12 +6,12 @@ import { addressLines, site } from "@/lib/site"
 
 export function Footer() {
   return (
-    <footer className="bg-navy pt-16 pb-7 text-[#b6c6dc] [&_a:hover]:underline">
+    <footer className="border-t border-background/15 bg-navy pt-16 pb-8 text-sm text-background/70 [&_a:hover]:underline">
       <div className="container-site grid gap-10 sm:grid-cols-2 lg:grid-cols-[1.4fr_1fr_1fr_1fr]">
         <div>
           <Logo light className="h-24" />
-          <p className="mt-4">Water softeners, filtration, and reverse osmosis for homes across the Kansas City metro.</p>
-          <ul className="mt-4 grid gap-1 text-white">
+          <p className="mt-4 leading-relaxed">Water softeners, filtration, and reverse osmosis for homes across the Kansas City metro.</p>
+          <ul className="mt-4 grid gap-1 font-mono text-background">
             <li><a href={site.phoneHref}>{site.phoneDisplay}</a></li>
             <li><a href={`mailto:${site.email}`}>{site.email}</a></li>
           </ul>
@@ -21,7 +21,7 @@ export function Footer() {
         </div>
         <div>
           <FooterHeading>Services</FooterHeading>
-          <ul className="grid gap-1 text-white">
+          <ul className="grid gap-2 text-background">
             {services.map((service) => (
               <li key={service.slug}><Link href={`/services/${service.slug}`}>{service.name}</Link></li>
             ))}
@@ -29,7 +29,7 @@ export function Footer() {
         </div>
         <div>
           <FooterHeading>Service areas</FooterHeading>
-          <ul className="grid gap-1 text-white">
+          <ul className="grid gap-2 text-background">
             {areas.map((area) => (
               <li key={area.slug}><Link href={`/service-areas/${area.slug}`}>{area.name}, {area.state}</Link></li>
             ))}
@@ -37,19 +37,19 @@ export function Footer() {
         </div>
         <div>
           <FooterHeading>Company</FooterHeading>
-          <ul className="grid gap-1 text-white">
+          <ul className="grid gap-2 text-background">
             <li><Link href="/#how">Our process</Link></li>
             <li><Link href="/#about">About us</Link></li>
             <li><Link href="/#faq">FAQ</Link></li>
           </ul>
         </div>
       </div>
-      <div className="container-site mt-12 flex flex-wrap justify-between gap-x-6 gap-y-2 border-t border-white/10 pt-5 text-sm">
+      <div className="container-site mt-12 flex flex-wrap justify-between gap-x-6 gap-y-2 border-t border-background/15 pt-6 font-mono text-xs text-background/60">
         <p>
           &copy; {new Date().getFullYear()} {site.legalName} d/b/a {site.name}. All rights reserved.
         </p>
         <p>Installations are performed by independent licensed and insured plumbing contractors.</p>
-        <p className="flex gap-4 text-white">
+        <p className="flex gap-4 text-background">
           <Link href="/privacy">Privacy Policy</Link>
           <Link href="/terms">Terms of Service</Link>
         </p>
@@ -59,5 +59,5 @@ export function Footer() {
 }
 
 function FooterHeading({ children }: { children: React.ReactNode }) {
-  return <h3 className="mb-3 text-sm tracking-widest text-white uppercase">{children}</h3>
+  return <h3 className="mb-4 font-mono text-xs font-medium tracking-widest text-accent uppercase">{children}</h3>
 }

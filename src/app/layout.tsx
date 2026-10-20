@@ -1,12 +1,14 @@
 import type { Metadata } from "next"
-import { Fraunces, Manrope } from "next/font/google"
+import { Fraunces, IBM_Plex_Mono, Manrope } from "next/font/google"
 import { Footer } from "@/components/site/footer"
 import { Header } from "@/components/site/header"
 import { serviceArea, site } from "@/lib/site"
 import "./globals.css"
 
 const manrope = Manrope({ variable: "--font-manrope", subsets: ["latin"] })
-const fraunces = Fraunces({ variable: "--font-fraunces", subsets: ["latin"], weight: ["600", "700"] })
+const plexMono = IBM_Plex_Mono({ variable: "--font-plex-mono", subsets: ["latin"], weight: ["400", "500"] })
+// Only used for the logo's wordmark
+const fraunces = Fraunces({ variable: "--font-fraunces", subsets: ["latin"], weight: ["700"] })
 
 export const metadata: Metadata = {
   metadataBase: new URL(site.url),
@@ -55,7 +57,7 @@ const jsonLd = {
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
-    <html lang="en" className={`${manrope.variable} ${fraunces.variable}`}>
+    <html lang="en" className={`${manrope.variable} ${plexMono.variable} ${fraunces.variable}`}>
       <body className="flex min-h-full flex-col">
         <Header />
         <main>{children}</main>

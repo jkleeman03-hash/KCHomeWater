@@ -3,13 +3,14 @@
 import { useState } from "react"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
-import { ChevronDownIcon, MenuIcon } from "lucide-react"
+import { ChevronDownIcon, MenuIcon, PhoneIcon } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Sheet, SheetContent, SheetTitle, SheetTrigger } from "@/components/ui/sheet"
 import { ChatButton } from "@/components/site/chat-button"
 import { Logo } from "@/components/site/logo"
 import { areas } from "@/lib/areas"
 import { services } from "@/lib/services"
+import { site } from "@/lib/site"
 
 type NavLink = { href: string; label: string; children?: { href: string; label: string }[] }
 
@@ -35,23 +36,23 @@ export function Header() {
   const showChatButton = usePathname() !== "/free-consultation"
 
   return (
-    <header className="sticky top-0 z-50 border-b bg-white/95 backdrop-blur">
-      <div className="container-site flex h-20 items-center justify-between">
-        <Logo />
+    <header className="sticky top-0 z-50 border-b bg-background/85 backdrop-blur">
+      <div className="container-site flex h-16 items-center justify-between gap-6">
+        <Logo className="h-12" />
 
-        <nav aria-label="Main" className="hidden items-center gap-6 lg:flex">
+        <nav aria-label="Main" className="hidden items-center gap-8 text-sm text-muted-foreground lg:flex">
           {links.map((link) =>
             link.children ? (
               <div key={link.href} className="group relative">
-                <Link href={link.href} className="flex items-center gap-1 font-semibold text-foreground hover:text-blue">
+                <Link href={link.href} className="flex items-center gap-1 transition-colors hover:text-foreground">
                   {link.label}
                   <ChevronDownIcon className="size-4 transition-transform group-focus-within:rotate-180 group-hover:rotate-180" />
                 </Link>
                 <div className="invisible absolute top-full left-1/2 w-72 -translate-x-1/2 pt-3 opacity-0 transition group-focus-within:visible group-focus-within:opacity-100 group-hover:visible group-hover:opacity-100">
-                  <ul className="rounded-xl border bg-white p-2 shadow-[0_10px_30px_-12px_rgba(19,41,75,.35)]">
+                  <ul className="rounded-xl border bg-card p-2 shadow-xl shadow-foreground/10">
                     {link.children.map((child) => (
                       <li key={child.href}>
-                        <Link href={child.href} className="block rounded-lg px-3 py-2 font-semibold text-navy hover:bg-tint">
+                        <Link href={child.href} className="block rounded-lg px-3 py-2 font-medium text-foreground hover:bg-secondary">
                           {child.label}
                         </Link>
                       </li>
@@ -60,13 +61,23 @@ export function Header() {
                 </div>
               </div>
             ) : (
-              <Link key={link.href} href={link.href} className="font-semibold text-foreground hover:text-blue">
+              <Link key={link.href} href={link.href} className="transition-colors hover:text-foreground">
                 {link.label}
               </Link>
             ),
           )}
-          {showChatButton && <ChatButton size="default" className="h-10 px-5" />}
         </nav>
+
+        <div className="hidden items-center gap-5 lg:flex">
+          <a
+            href={site.phoneHref}
+            className="flex items-center gap-2 font-mono text-sm text-muted-foreground hover:text-foreground"
+          >
+            <PhoneIcon className="size-4" />
+            {site.phoneDisplay}
+          </a>
+          {showChatButton && <ChatButton size="default" className="h-9 px-4" />}
+        </div>
 
         <Sheet open={open} onOpenChange={setOpen}>
           <SheetTrigger asChild>
@@ -79,7 +90,7 @@ export function Header() {
             <nav aria-label="Mobile" className="flex flex-col">
               {links.map((link) => (
                 <div key={link.href} className="border-b py-3">
-                  <Link href={link.href} onClick={() => setOpen(false)} className="block py-1 text-lg font-semibold text-navy">
+                  <Link href={link.href} onClick={() => setOpen(false)} className="block py-1 text-lg font-semibold text-foreground">
                     {link.label}
                   </Link>
                   {link.children && (
