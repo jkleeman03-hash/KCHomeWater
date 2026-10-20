@@ -8,7 +8,9 @@ import { Input } from "@/components/ui/input"
 import { site } from "@/lib/site"
 import { scoreEstimate, zipFromAddress, type EstimateInput, type WaterSource } from "@/lib/pricing"
 
-// The estimate runs entirely in the browser: nothing typed here is saved or sent anywhere.
+// The estimate runs in the browser. Nothing is sent anywhere unless the visitor books a call: then their answers and
+// price range ride along in the calendar link and fill hidden fields on the GHL "Quote Call" form, so they're saved on
+// the contact for the call.
 // Once it shows, visitors can call or text us, or book their quote call on the GoHighLevel calendar below it.
 // The calendar collects a phone number for calls only: its form has no SMS consent checkbox and its SMS notifications
 // are off, so it isn't a second texting opt-in for A2P 10DLC (see chat-widget.tsx). Call and text links just open the
@@ -46,7 +48,7 @@ export function PricingEstimator() {
     e.preventDefault()
     const zip = zipFromAddress(address)
     setZipError(!zip)
-    setInput(zip ? { zip, water, bathrooms, residents, taps } : null)
+    setInput(zip ? { address: address.trim(), zip, water, bathrooms, residents, taps } : null)
   }
 
   return (
@@ -86,7 +88,7 @@ export function PricingEstimator() {
           {input ? <Result input={input} /> : <EmptyResult />}
         </div>
       </div>
-      {input && site.bookingCalendarUrl && <BookingCalendar url={site.bookingCalendarUrl} />}
+      {input && site.bookingCalendarUrl && <BookingCalendar url={bookingUrl(site.bookingCalendarUrl, input)} />}
     </>
   )
 }
@@ -139,9 +141,27 @@ function EmptyResult() {
 }
 
 // Shows only the price range. The scores behind it stay internal.
-function Result({ input }: { input: EstimateInput }) {
+function priceRange(input: EstimateInput) {
   const { price } = scoreEstimate(input)
-  const range = `${money.format(price.low)} – ${money.format(price.high)}`
+  return `${money.format(price.low)} – ${money.format(price.high)}`
+}
+
+// Query keys must match the hidden fields' query keys on the GHL "Quote Call" form.
+function bookingUrl(base: string, input: EstimateInput) {
+  const url = new URL(base)
+  // "or more" rather than "+", because GHL turns a "+" into a space
+  const plus = (n: number, max: number) => (n >= max ? `${max} or more` : String(n))
+  url.searchParams.set("estimate_address", input.address)
+  url.searchParams.set("water_source", input.water === "city" ? "City water" : "Well water")
+  url.searchParams.set("bathrooms", plus(input.bathrooms, 4))
+  url.searchParams.set("residents", plus(input.residents, 4))
+  url.searchParams.set("drinking_taps", plus(input.taps, 3))
+  url.searchParams.set("estimate_range", priceRange(input))
+  return url.toString()
+}
+
+function Result({ input }: { input: EstimateInput }) {
+  const range = priceRange(input)
   // "?&body=" works on both iPhone and Android
   const smsHref = `sms:${site.phoneHref.replace("tel:", "")}?&body=${encodeURIComponent(
     `Hi, I got an estimate of ${range} on your website (ZIP ${input.zip}). I'd like my exact quote.`,

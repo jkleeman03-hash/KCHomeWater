@@ -46,6 +46,7 @@ export function zipFromAddress(address: string) {
 export type WaterSource = "city" | "well"
 
 export type EstimateInput = {
+  address: string
   zip: string
   water: WaterSource
   bathrooms: number
