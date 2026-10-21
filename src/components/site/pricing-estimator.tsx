@@ -2,11 +2,12 @@
 
 import { useState } from "react"
 import Script from "next/script"
+import { track } from "@vercel/analytics"
 import { MessageSquareIcon, PhoneIcon } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { site } from "@/lib/site"
-import { scoreEstimate, zipFromAddress, type EstimateInput, type WaterSource } from "@/lib/pricing"
+import { isCoreZip, scoreEstimate, zipFromAddress, type EstimateInput, type WaterSource } from "@/lib/pricing"
 
 // The estimate runs in the browser. Nothing is sent anywhere unless the visitor books a call: then their answers and
 // price range ride along in the calendar link and fill hidden fields on the GHL "Quote Call" form, so they're saved on
@@ -49,6 +50,8 @@ export function PricingEstimator() {
     const zip = zipFromAddress(address)
     setZipError(!zip)
     setInput(zip ? { address: address.trim(), zip, water, bathrooms, residents, taps } : null)
+    // Anonymous funnel events for Vercel Analytics. Never send the address or ZIP.
+    if (zip) track("Estimate completed", { area: isCoreZip(zip) ? "Jackson/Johnson" : "Other", water })
   }
 
   return (
@@ -181,13 +184,13 @@ function Result({ input }: { input: EstimateInput }) {
       <p className="mt-6 text-sm font-medium">Get your exact quote:</p>
       <div className="mt-3 grid grid-cols-2 gap-3">
         <Button asChild size="xl" variant={site.bookingCalendarUrl ? "outline" : "default"}>
-          <a href={site.phoneHref}>
+          <a href={site.phoneHref} onClick={() => track("Call clicked", { from: "estimate" })}>
             <PhoneIcon />
             Call us
           </a>
         </Button>
         <Button asChild size="xl" variant="outline">
-          <a href={smsHref}>
+          <a href={smsHref} onClick={() => track("Text clicked", { from: "estimate" })}>
             <MessageSquareIcon />
             Text us
           </a>
@@ -195,7 +198,9 @@ function Result({ input }: { input: EstimateInput }) {
       </div>
       {site.bookingCalendarUrl && (
         <Button asChild size="xl" className="mt-3 w-full">
-          <a href="#book">Book a call</a>
+          <a href="#book" onClick={() => track("Book a call clicked")}>
+            Book a call
+          </a>
         </Button>
       )}
       <p className="mt-4 text-center font-mono text-xs text-muted-foreground">{site.phoneDisplay}</p>

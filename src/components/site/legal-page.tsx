@@ -2,7 +2,7 @@ import Link from "next/link"
 import { ChevronRightIcon } from "lucide-react"
 import { addressLines, site } from "@/lib/site"
 
-export const legalUpdated = "October 13, 2026"
+export const legalUpdated = "October 20, 2026"
 
 // Plain reading layout for the Privacy Policy and Terms of Service.
 export function LegalPage({ title, children }: { title: string; children: React.ReactNode }) {

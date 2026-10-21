@@ -36,8 +36,9 @@ export default function PrivacyPage() {
         </li>
         <li>
           <strong>Technical information:</strong> our website host automatically records basic technical data such as
-          IP address, browser type, and pages visited, for security and to keep the site running. We do not use
-          advertising or tracking cookies.
+          IP address, browser type, and pages visited, for security and to keep the site running. We also use Vercel
+          Web Analytics to count visits and see which pages and steps are used. It works without cookies and
+          doesn&apos;t identify you personally. We do not use advertising or tracking cookies.
         </li>
       </ul>
 
