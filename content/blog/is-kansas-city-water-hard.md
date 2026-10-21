@@ -9,7 +9,7 @@ Short answer: yes. Water across the Kansas City metro is typically **moderately 
 
 Kansas City's water comes mostly from the Missouri River. Independence draws from wells along the river, and most of Johnson County is served by WaterOne, which draws from the Missouri and Kansas Rivers. Many surrounding cities buy their water from one of these systems.
 
-As water moves through soil and rock, it picks up dissolved **calcium and magnesium**. Those minerals are what make water "hard." Utilities treat the water to make it safe, but they don't soften it. KC-area utilities also disinfect with **chloramine**, which keeps water safe in the pipes but is behind the chemical taste and smell many people notice.
+As water moves through soil and rock, it picks up dissolved **calcium and magnesium**. Those minerals are what make water "hard." While lime-softening lowers the mineral content from the raw Missouri River, the water is still considered moderately hard. Many households install a whole-home water softener to protect their appliances and laundry, and add a reverse osmosis system at the kitchen sink for drinking water. KC-area utilities also disinfect with **chloramine**, which keeps water safe in the pipes but is behind the chemical taste and smell many people notice.
 
 ## Signs you have hard water
 
