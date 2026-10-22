@@ -6,6 +6,10 @@ export const site = {
   phoneDisplay: "(816) 705-0137",
   phoneHref: "tel:+18167050137",
   email: "contact@kchomewater.com",
+  social: [
+    { name: "Facebook", href: "https://www.facebook.com/share/198Sz2TFWF/" },
+    { name: "Instagram", href: "https://www.instagram.com/kchomewater/" },
+  ],
   // GoHighLevel booking calendar shown under the estimate on /pricing; empty hides it. Its phone field is for calls only,
   // so keep its SMS consent checkbox and SMS notifications off (A2P 10DLC).
   bookingCalendarUrl: "https://api.leadconnectorhq.com/booking/2rIMIhjlH2KQdj8ps8bw/sv/6ad79bec69c697f9a8a61adf?heightMode=fixed&showHeader=true",

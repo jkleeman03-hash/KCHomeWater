@@ -18,6 +18,11 @@ export function Footer() {
           <address className="mt-3 not-italic">
             {addressLines.map((line) => <div key={line}>{line}</div>)}
           </address>
+          <ul className="mt-4 flex gap-4 font-mono text-background">
+            {site.social.map((link) => (
+              <li key={link.name}><a href={link.href} target="_blank" rel="noopener noreferrer">{link.name}</a></li>
+            ))}
+          </ul>
         </div>
         <div>
           <FooterHeading>Services</FooterHeading>
