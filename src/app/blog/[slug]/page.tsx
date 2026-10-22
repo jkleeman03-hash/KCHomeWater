@@ -60,7 +60,7 @@ export default async function PostPage({ params }: PageProps<"/blog/[slug]">) {
           </header>
           {/* Post HTML comes from our own Markdown files in content/blog */}
           <div
-            className="mt-10 grid gap-5 text-[1.05rem] leading-relaxed text-foreground/85 [&_a]:font-medium [&_a]:text-primary [&_a]:underline [&_a]:underline-offset-4 [&_h2]:mt-8 [&_h2]:text-2xl [&_h2]:text-foreground md:[&_h2]:text-3xl [&_h3]:mt-4 [&_h3]:text-xl [&_li]:ml-5 [&_ol]:grid [&_ol]:list-decimal [&_ol]:gap-2 [&_strong]:font-semibold [&_strong]:text-foreground [&_table]:w-full [&_table]:text-sm [&_td]:border-t [&_td]:py-2 [&_td]:pr-4 [&_th]:pb-2 [&_th]:pr-4 [&_th]:text-left [&_th]:font-mono [&_th]:text-xs [&_th]:font-normal [&_th]:text-muted-foreground [&_th]:uppercase [&_ul]:grid [&_ul]:list-disc [&_ul]:gap-2"
+            className="mt-10 grid gap-5 text-[1.05rem] leading-relaxed text-foreground/85 [&_a]:font-medium [&_a]:text-primary [&_a]:underline [&_a]:underline-offset-4 [&_h2]:mt-8 [&_h2]:text-2xl [&_h2]:text-foreground md:[&_h2]:text-3xl [&_h3]:mt-4 [&_h3]:text-xl [&_li]:ml-5 [&_li:has(>input)]:list-none [&_li>input]:mr-2 [&_li>input]:accent-primary [&_ol]:grid [&_ol]:list-decimal [&_ol]:gap-2 [&_strong]:font-semibold [&_strong]:text-foreground [&_table]:w-full [&_table]:text-sm [&_td]:border-t [&_td]:py-2 [&_td]:pr-4 [&_th]:pb-2 [&_th]:pr-4 [&_th]:text-left [&_th]:font-mono [&_th]:text-xs [&_th]:font-normal [&_th]:text-muted-foreground [&_th]:uppercase [&_ul]:grid [&_ul]:list-disc [&_ul]:gap-2"
             dangerouslySetInnerHTML={{ __html: post.html }}
           />
         </div>
