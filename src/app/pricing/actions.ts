@@ -54,13 +54,20 @@ export async function saveEstimate(lead: Lead, input: EstimateInput, variant: Es
         email: email || undefined,
         postalCode: input.zip,
         source: "Website pricing estimator",
-        // estimate-gated or estimate-open, to compare the two versions in the A/B test
-        tags: ["estimate", `estimate-${variant}`],
         customFields: Object.entries(fields).map(([key, field_value]) => ({ key, field_value })),
       }),
     })
     if (!res.ok) throw new Error(`upsert ${res.status}: ${await res.text()}`)
     const { contact } = await res.json()
+
+    // Tags go on separately: upsert replaces a returning contact's tags, but this adds to them.
+    // estimate-gated or estimate-open compares the two versions in the A/B test.
+    const tagged = await fetch(`${api}/contacts/${contact.id}/tags`, {
+      method: "POST",
+      headers,
+      body: JSON.stringify({ tags: ["estimate", `estimate-${variant}`] }),
+    })
+    if (!tagged.ok) throw new Error(`tags ${tagged.status}: ${await tagged.text()}`)
 
     // A readable copy on the contact, in case a custom field key doesn't match.
     await fetch(`${api}/contacts/${contact.id}/notes`, {
