@@ -14,7 +14,7 @@ export function Hero() {
             Serving the entire Kansas City metro
           </p>
           <h1 className="text-4xl leading-tight md:text-6xl md:leading-[1.05]">
-            Whole home water filtration for cleaner, better-tasting Kansas City water
+            Kansas City&apos;s Trusted Whole&#8209;Home Water Specialist
           </h1>
           <p className="mt-6 max-w-xl text-lg leading-relaxed text-pretty text-muted-foreground">
             KC Home Water helps homeowners enjoy softer, cleaner, better-tasting water. We install water softeners,
