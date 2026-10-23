@@ -159,7 +159,7 @@ export default function PricingExplainedPage() {
             <p className="eyebrow">Your estimate</p>
             <h2 className="text-3xl md:text-5xl">See your price range in under a minute.</h2>
             <p className="mt-6 leading-relaxed text-pretty">
-              Answer the same four questions, plus your address, and we&apos;ll show you an estimated price range.
+              Answer the same four questions, plus your ZIP code, and we&apos;ll show you an estimated price range.
               Your exact price comes in a written quote.
             </p>
           </div>

@@ -7,15 +7,19 @@ import { MessageSquareIcon, PhoneIcon } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { site } from "@/lib/site"
-import { isCoreZip, scoreEstimate, zipFromAddress, type EstimateInput, type WaterSource } from "@/lib/pricing"
+import { saveEstimate, type Lead } from "@/app/pricing/actions"
+import { isCoreZip, isZip, priceRange, type EstimateInput, type EstimateVariant, type WaterSource } from "@/lib/pricing"
 
-// The estimate runs in the browser. Nothing is sent anywhere unless the visitor books a call: then their answers and
-// price range ride along in the calendar link and fill hidden fields on the GHL "Quote Call" form, so they're saved on
-// the contact for the call.
+// An A/B test (see proxy.ts) shows each visitor one of two versions:
+// - "gated": name, phone, and optional email are required, along with the ZIP, before the estimate shows.
+// - "open": the estimate shows with just the ZIP, and a short form beside the price asks for their details.
+// Either way the details are saved as a GHL contact tagged "estimate" and "estimate-<variant>" (see actions.ts), so we
+// can call them back even if they don't book, and compare how many leads each version brings in. Their answers and
+// price range also ride along in the calendar link and fill hidden fields on the GHL "Quote Call" form.
 // Once it shows, visitors can call or text us, or book their quote call on the GoHighLevel calendar below it.
-// The calendar collects a phone number for calls only: its form has no SMS consent checkbox and its SMS notifications
-// are off, so it isn't a second texting opt-in for A2P 10DLC (see chat-widget.tsx). Call and text links just open the
-// visitor's own phone app.
+// Both this form and the calendar collect a phone number for calls only: no SMS consent checkbox, and the calendar's
+// SMS notifications are off, so neither is a second texting opt-in for A2P 10DLC (see chat-widget.tsx). Call and text
+// links just open the visitor's own phone app.
 
 const waterOptions: { value: WaterSource; label: string }[] = [
   { value: "city", label: "City water" },
@@ -34,50 +38,56 @@ const tapOptions = [
   { value: 3, label: "3+" },
 ]
 
-const money = new Intl.NumberFormat("en-US", { style: "currency", currency: "USD", maximumFractionDigits: 0 })
-
-export function PricingEstimator() {
-  const [address, setAddress] = useState("")
+export function PricingEstimator({ variant }: { variant: EstimateVariant }) {
+  const gated = variant === "gated"
+  const [lead, setLead] = useState<Lead>({ name: "", phone: "", email: "" })
+  const [leadSaved, setLeadSaved] = useState(false)
+  const [zip, setZip] = useState("")
   const [water, setWater] = useState<WaterSource>("city")
   const [bathrooms, setBathrooms] = useState(2)
   const [residents, setResidents] = useState(2)
   const [taps, setTaps] = useState(1)
   const [input, setInput] = useState<EstimateInput | null>(null)
-  const [zipError, setZipError] = useState(false)
+  const [errors, setErrors] = useState<Errors>({})
+
+  // Shows the estimate right away; saving it to GHL happens in the background.
+  function submitLead(next: EstimateInput) {
+    void saveEstimate(lead, next, variant)
+    setLeadSaved(true)
+    track("Lead submitted", { variant })
+  }
 
   function onSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault()
-    const zip = zipFromAddress(address)
-    setZipError(!zip)
-    setInput(zip ? { address: address.trim(), zip, water, bathrooms, residents, taps } : null)
-    // Anonymous funnel events for Vercel Analytics. Never send the address or ZIP.
-    if (zip) track("Estimate completed", { area: isCoreZip(zip) ? "Jackson/Johnson" : "Other", water })
+    // Bots fill the hidden "company" field; people never see it.
+    if (new FormData(e.currentTarget).get("company")) return
+    const found = { ...(gated ? validateLead(lead) : {}), ...(isZip(zip) ? {} : { zip: "Please enter your 5-digit ZIP code." }) }
+    setErrors(found)
+    if (Object.keys(found).length) return
+    const next = { zip, water, bathrooms, residents, taps }
+    setInput(next)
+    if (gated) submitLead(next)
+    // Anonymous funnel events for Vercel Analytics. Never send the name, phone, email, or ZIP.
+    track("Estimate completed", { area: isCoreZip(zip) ? "Jackson/Johnson" : "Other", water, variant })
   }
 
   return (
     <>
       <div className="grid items-start gap-10 lg:grid-cols-[1.2fr_1fr] lg:gap-16">
         <form onSubmit={onSubmit} noValidate className="flex flex-col gap-7 rounded-2xl border bg-card p-6 md:p-10">
-          <div className="flex flex-col gap-2">
-            <label htmlFor="address" className="text-sm font-medium">
-              Address
-            </label>
+          {gated && <LeadFields lead={lead} onChange={setLead} errors={errors} />}
+          <Field id="zip" label="ZIP code" error={errors.zip}>
             <Input
-              id="address"
-              value={address}
-              onChange={(e) => setAddress(e.target.value)}
-              autoComplete="street-address"
-              placeholder="123 Main St, Lee's Summit, MO 64063"
-              aria-invalid={zipError}
-              aria-describedby={zipError ? "address-error" : undefined}
-              className="h-11"
+              id="zip"
+              value={zip}
+              onChange={(e) => setZip(e.target.value.replace(/\D/g, "").slice(0, 5))}
+              inputMode="numeric"
+              autoComplete="postal-code"
+              placeholder="64063"
+              {...fieldProps("zip", errors)}
             />
-            {zipError && (
-              <p id="address-error" className="text-xs text-destructive">
-                Please include your 5-digit ZIP code.
-              </p>
-            )}
-          </div>
+          </Field>
+          <Honeypot />
           <Choice legend="City water or well water?" name="water" options={waterOptions} value={water} onChange={setWater} />
           <Choice legend="Bathrooms in home" name="bathrooms" options={bathroomOptions} value={bathrooms} onChange={setBathrooms} />
           <Choice legend="Residents in home" name="residents" options={residentOptions} value={residents} onChange={setResidents} />
@@ -88,11 +98,151 @@ export function PricingEstimator() {
         </form>
 
         <div aria-live="polite" className="lg:sticky lg:top-28">
-          {input ? <Result input={input} /> : <EmptyResult />}
+          {input ? (
+            <Result input={input}>
+              {!gated && (
+                <LeadRequest
+                  lead={lead}
+                  onChange={setLead}
+                  saved={leadSaved}
+                  onSubmit={() => submitLead(input)}
+                />
+              )}
+            </Result>
+          ) : (
+            <EmptyResult gated={gated} />
+          )}
         </div>
       </div>
-      {input && site.bookingCalendarUrl && <BookingCalendar url={bookingUrl(site.bookingCalendarUrl, input)} />}
+      {input && site.bookingCalendarUrl && (
+        <BookingCalendar url={bookingUrl(site.bookingCalendarUrl, leadSaved ? lead : null, input)} />
+      )}
     </>
+  )
+}
+
+// The open version's ask, shown under the price.
+function LeadRequest({
+  lead,
+  onChange,
+  saved,
+  onSubmit,
+}: {
+  lead: Lead
+  onChange: (lead: Lead) => void
+  saved: boolean
+  onSubmit: () => void
+}) {
+  const [errors, setErrors] = useState<Errors>({})
+
+  if (saved) {
+    return (
+      <p className="mt-6 rounded-lg bg-secondary p-4 text-sm font-medium">
+        Thanks, {lead.name.trim().split(/\s+/)[0]}. We&apos;ll call you soon with your exact quote.
+      </p>
+    )
+  }
+
+  function submit(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault()
+    if (new FormData(e.currentTarget).get("company")) return
+    const found = validateLead(lead)
+    setErrors(found)
+    if (!Object.keys(found).length) onSubmit()
+  }
+
+  return (
+    <form onSubmit={submit} noValidate className="mt-6 flex flex-col gap-5 border-t border-dashed pt-6">
+      <p className="text-sm font-medium">Want your exact quote? We&apos;ll call you.</p>
+      <LeadFields lead={lead} onChange={onChange} errors={errors} />
+      <Honeypot />
+      <Button type="submit" size="xl">
+        Call me with my quote
+      </Button>
+    </form>
+  )
+}
+
+function LeadFields({ lead, onChange, errors }: { lead: Lead; onChange: (lead: Lead) => void; errors: Errors }) {
+  const set = (key: keyof Lead) => (e: React.ChangeEvent<HTMLInputElement>) => onChange({ ...lead, [key]: e.target.value })
+  return (
+    <>
+      <Field id="name" label="Name" error={errors.name}>
+        <Input id="name" value={lead.name} onChange={set("name")} autoComplete="name" {...fieldProps("name", errors)} />
+      </Field>
+      <Field id="phone" label="Phone" error={errors.phone} hint="We'll only use it to call you. We won't text you.">
+        <Input
+          id="phone"
+          type="tel"
+          value={lead.phone}
+          onChange={set("phone")}
+          autoComplete="tel"
+          placeholder="(816) 555-0123"
+          {...fieldProps("phone", errors)}
+        />
+      </Field>
+      <Field id="email" label="Email (optional)" error={errors.email}>
+        <Input
+          id="email"
+          type="email"
+          value={lead.email}
+          onChange={set("email")}
+          autoComplete="email"
+          {...fieldProps("email", errors)}
+        />
+      </Field>
+    </>
+  )
+}
+
+// Hidden from people and screen readers; bots fill it in.
+function Honeypot() {
+  return <input type="text" name="company" tabIndex={-1} autoComplete="off" aria-hidden className="hidden" />
+}
+
+type Errors = Partial<Record<keyof Lead | "zip", string>>
+
+function validateLead(lead: Lead): Errors {
+  const errors: Errors = {}
+  const digits = lead.phone.replace(/\D/g, "").replace(/^1(?=\d{10}$)/, "")
+  if (!lead.name.trim()) errors.name = "Please enter your name."
+  if (!/^[2-9]\d{2}[2-9]\d{6}$/.test(digits)) errors.phone = "Please enter a 10-digit phone number."
+  if (lead.email.trim() && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(lead.email.trim()))
+    errors.email = "Please check your email address."
+  return errors
+}
+
+function fieldProps(id: keyof Errors, errors: Errors) {
+  return { "aria-invalid": !!errors[id], "aria-describedby": errors[id] ? `${id}-error` : undefined, className: "h-11" }
+}
+
+function Field({
+  id,
+  label,
+  hint,
+  error,
+  children,
+}: {
+  id: string
+  label: string
+  hint?: string
+  error?: string
+  children: React.ReactNode
+}) {
+  return (
+    <div className="flex flex-col gap-2">
+      <label htmlFor={id} className="text-sm font-medium">
+        {label}
+      </label>
+      {children}
+      {error ? (
+        <p id={`${id}-error`} className="text-xs text-destructive">
+          {error}
+        </p>
+      ) : (
+        hint && <p className="text-xs text-muted-foreground">{hint}</p>
+      )}
+    </div>
   )
 }
 
@@ -134,27 +284,30 @@ function Choice<T extends string | number>({
   )
 }
 
-function EmptyResult() {
+function EmptyResult({ gated }: { gated: boolean }) {
   return (
     <div className="rounded-2xl border border-dashed p-8 text-center">
       <p className="eyebrow mb-2">Your estimate</p>
-      <p className="text-muted-foreground">Fill in your home details, get your estimate, and book a time.</p>
+      <p className="text-muted-foreground">{gated ? "Fill in your details" : "Answer a few questions"}, get your estimate, and book a time.</p>
     </div>
   )
 }
 
-// Shows only the price range. The scores behind it stay internal.
-function priceRange(input: EstimateInput) {
-  const { price } = scoreEstimate(input)
-  return `${money.format(price.low)} – ${money.format(price.high)}`
-}
-
 // Query keys must match the hidden fields' query keys on the GHL "Quote Call" form.
-function bookingUrl(base: string, input: EstimateInput) {
+function bookingUrl(base: string, lead: Lead | null, input: EstimateInput) {
   const url = new URL(base)
+  // Prefill the contact fields so they don't type them twice
+  if (lead) {
+    const [firstName, ...rest] = lead.name.trim().split(/\s+/)
+    url.searchParams.set("first_name", firstName)
+    if (rest.length) url.searchParams.set("last_name", rest.join(" "))
+    url.searchParams.set("phone", lead.phone)
+    if (lead.email.trim()) url.searchParams.set("email", lead.email.trim())
+  }
   // "or more" rather than "+", because GHL turns a "+" into a space
   const plus = (n: number, max: number) => (n >= max ? `${max} or more` : String(n))
-  url.searchParams.set("estimate_address", input.address)
+  // estimate_address now holds the ZIP, since we no longer ask for the street address
+  url.searchParams.set("estimate_address", input.zip)
   url.searchParams.set("water_source", input.water === "city" ? "City water" : "Well water")
   url.searchParams.set("bathrooms", plus(input.bathrooms, 4))
   url.searchParams.set("residents", plus(input.residents, 4))
@@ -163,7 +316,7 @@ function bookingUrl(base: string, input: EstimateInput) {
   return url.toString()
 }
 
-function Result({ input }: { input: EstimateInput }) {
+function Result({ input, children }: { input: EstimateInput; children?: React.ReactNode }) {
   const range = priceRange(input)
   // "?&body=" works on both iPhone and Android
   const smsHref = `sms:${site.phoneHref.replace("tel:", "")}?&body=${encodeURIComponent(
@@ -181,7 +334,8 @@ function Result({ input }: { input: EstimateInput }) {
       <p className="mt-5 border-t border-dashed pt-5 text-sm leading-relaxed text-muted-foreground">
         This is an estimate. Your final price comes in a written quote after a free consultation.
       </p>
-      <p className="mt-6 text-sm font-medium">Get your exact quote:</p>
+      {children}
+      <p className="mt-6 text-sm font-medium">{children ? "Or reach us now:" : "Get your exact quote:"}</p>
       <div className="mt-3 grid grid-cols-2 gap-3">
         <Button asChild size="xl" variant={site.bookingCalendarUrl ? "outline" : "default"}>
           <a href={site.phoneHref} onClick={() => track("Call clicked", { from: "estimate" })}>

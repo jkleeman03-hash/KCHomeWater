@@ -37,16 +37,17 @@ export function isCoreZip(zip: string) {
   return coreZips.has(zip) || (n >= 66201 && n <= 66286)
 }
 
-// The last 5-digit number in the address, so a 5-digit house number isn't mistaken for the ZIP.
-export function zipFromAddress(address: string) {
-  const matches = address.match(/\b\d{5}(?=(-\d{4})?\b)/g)
-  return matches ? matches[matches.length - 1] : null
+export function isZip(zip: string) {
+  return /^\d{5}$/.test(zip)
 }
 
 export type WaterSource = "city" | "well"
 
+// The A/B test on /pricing (see proxy.ts): "gated" asks for contact details before showing the estimate, "open" after.
+export const estimateVariants = ["gated", "open"] as const
+export type EstimateVariant = (typeof estimateVariants)[number]
+
 export type EstimateInput = {
-  address: string
   zip: string
   water: WaterSource
   bathrooms: number
@@ -64,6 +65,14 @@ export function scoreEstimate({ zip, water, bathrooms, residents, taps }: Estima
   }
   const total = Object.values(scores).reduce((sum, s) => sum + s, 0)
   return { scores, total, price: priceByScore[total] }
+}
+
+const money = new Intl.NumberFormat("en-US", { style: "currency", currency: "USD", maximumFractionDigits: 0 })
+
+// The only result visitors see. The scores behind it stay internal.
+export function priceRange(input: EstimateInput) {
+  const { price } = scoreEstimate(input)
+  return `${money.format(price.low)} – ${money.format(price.high)}`
 }
 
 // Price range shown for each total score (scores run from 5 to 14).
