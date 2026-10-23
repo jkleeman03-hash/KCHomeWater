@@ -14,12 +14,13 @@ export function Hero() {
             Serving the entire Kansas City metro
           </p>
           <h1 className="text-4xl leading-tight md:text-6xl md:leading-[1.05]">
-            Kansas City&apos;s Top Whole Home Water &amp; Filtration Service
+            Whole home water filtration for cleaner, better-tasting Kansas City water
           </h1>
           <p className="mt-6 max-w-xl text-lg leading-relaxed text-pretty text-muted-foreground">
-            We design and install whole-home water softeners, carbon filtration, and reverse osmosis drinking water
-            systems for Kansas City homes. You get upfront pricing with no pushy in-home sales pitch, and a licensed
-            local plumber does the install.
+            KC Home Water helps homeowners enjoy softer, cleaner, better-tasting water. We install water softeners,
+            whole-home carbon filters, well water treatment, and reverse osmosis drinking water systems for homes on
+            city or well water. You
+            get honest recommendations, upfront pricing, and a licensed local plumber for the install.
           </p>
           <div className="mt-8 flex flex-col gap-3 sm:flex-row">
             <EstimateButton />

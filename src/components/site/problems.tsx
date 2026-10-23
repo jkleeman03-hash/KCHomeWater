@@ -28,8 +28,8 @@ export function Problems() {
   return (
     <Section id="problems" tone="card">
       <SectionHeading eyebrow="Kansas City water" title="Your city water is safe to drink. It can still be hard on your home.">
-        Most KC-area utilities draw from the Missouri River and treat it with chloramine. The water meets safety
-        standards, but many homeowners still deal with:
+        Most Kansas City tap water comes from the Missouri River and is disinfected with a chlorine-based treatment.
+        It meets safety standards, but many homeowners still deal with:
       </SectionHeading>
       <ul className="grid gap-px overflow-hidden rounded-2xl border bg-border sm:grid-cols-2 lg:grid-cols-4">
         {problems.map(({ icon: Icon, title, body }) => (

@@ -7,7 +7,7 @@ const steps = [
   },
   {
     title: "Get a clear, written quote",
-    body: "You'll see exactly what's included and what it costs. Nothing is hidden, and we'll never pressure you with a high-pressure demo.",
+    body: "You'll see exactly what's included and what it costs. Nothing is hidden, and there's no high-pressure sales pitch.",
   },
   {
     title: "Licensed plumber installs",

@@ -23,7 +23,7 @@ export const site = {
     country: "US",
   },
   description:
-    "Whole-home water softeners, carbon filtration, and reverse osmosis drinking water for homes across the Kansas City metro. Upfront pricing, installed by licensed local plumbers.",
+    "Whole-home water softeners, carbon filtration, well water treatment, and reverse osmosis drinking water for homes across the Kansas City metro. Upfront pricing, installed by licensed local plumbers.",
 }
 
 export const addressLines = [
