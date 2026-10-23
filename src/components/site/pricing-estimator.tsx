@@ -157,7 +157,7 @@ function LeadRequest({
       <LeadFields lead={lead} onChange={onChange} errors={errors} />
       <Honeypot />
       <Button type="submit" size="xl">
-        Call me with my quote
+        Get my quote
       </Button>
     </form>
   )

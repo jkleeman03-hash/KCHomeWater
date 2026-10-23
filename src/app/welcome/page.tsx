@@ -1,6 +1,6 @@
 import type { Metadata } from "next"
 import Link from "next/link"
-import { ArrowRightIcon, BookOpenIcon, CalculatorIcon, type LucideIcon } from "lucide-react"
+import { ArrowRightIcon, CalculatorIcon, DropletsIcon, type LucideIcon } from "lucide-react"
 import { site } from "@/lib/site"
 
 // Landing page for Facebook and Instagram ads. Kept out of search results and the sitemap.
@@ -21,10 +21,10 @@ const destinations: Destination[] = [
     icon: CalculatorIcon,
   },
   {
-    href: "/blog",
-    label: "Learn more about my water",
-    body: "Plain-language guides to hard water, filtration, and reverse osmosis.",
-    icon: BookOpenIcon,
+    href: "/services",
+    label: "Learn more",
+    body: "Water softeners, whole-home filtration, and reverse osmosis drinking water.",
+    icon: DropletsIcon,
   },
 ]
 
