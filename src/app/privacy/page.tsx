@@ -38,7 +38,12 @@ export default function PrivacyPage() {
           <strong>Technical information:</strong> our website host automatically records basic technical data such as
           IP address, browser type, and pages visited, for security and to keep the site running. We also use Vercel
           Web Analytics to count visits and see which pages and steps are used. It works without cookies and
-          doesn&apos;t identify you personally. We do not use advertising or tracking cookies.
+          doesn&apos;t identify you personally. We also use the Meta Pixel, which sets a cookie and tells Meta which
+          pages you visit so we can measure and show our Facebook and Instagram ads. You can manage this in your{" "}
+          <a href="https://www.facebook.com/adpreferences/" target="_blank" rel="noopener noreferrer">
+            Meta ad preferences
+          </a>{" "}
+          or by blocking cookies in your browser.
         </li>
       </ul>
 

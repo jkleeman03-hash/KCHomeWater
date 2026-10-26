@@ -3,6 +3,7 @@ import { Analytics } from "@vercel/analytics/next"
 import { Fraunces, IBM_Plex_Mono, Manrope } from "next/font/google"
 import { Footer } from "@/components/site/footer"
 import { Header } from "@/components/site/header"
+import { MetaPixel } from "@/components/site/meta-pixel"
 import { serviceArea, site } from "@/lib/site"
 import "./globals.css"
 
@@ -64,6 +65,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
         <main>{children}</main>
         <Footer />
         <Analytics />
+        <MetaPixel />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
