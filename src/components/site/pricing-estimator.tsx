@@ -1,9 +1,10 @@
 "use client"
 
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import Script from "next/script"
 import { track } from "@vercel/analytics"
 import { MessageSquareIcon, PhoneIcon } from "lucide-react"
+import { trackPixel } from "@/components/site/meta-pixel"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { site } from "@/lib/site"
@@ -55,6 +56,8 @@ export function PricingEstimator({ variant }: { variant: EstimateVariant }) {
     void saveEstimate(lead, next, variant)
     setLeadSaved(true)
     track("Lead submitted", { variant })
+    // Meta ads optimize for Lead events: this one and a booked quote call (see BookingCalendar).
+    trackPixel("Lead", { content_name: "Estimate" })
   }
 
   function onSubmit(e: React.FormEvent<HTMLFormElement>) {
@@ -363,6 +366,27 @@ function Result({ input, children }: { input: EstimateInput; children?: React.Re
 }
 
 function BookingCalendar({ url }: { url: string }) {
+  // GHL sends no "booked" event, but after a booking the calendar posts ["set-sticky-contacts", "_ud", json] to this
+  // page, and the json includes the appointment. We only check that it's there; the contact details in it aren't sent on.
+  useEffect(() => {
+    let booked = false
+    function onMessage(e: MessageEvent) {
+      if (booked || e.origin !== new URL(url).origin) return
+      const [action, key, json] = Array.isArray(e.data) ? e.data : []
+      if (action !== "set-sticky-contacts" || key !== "_ud" || typeof json !== "string") return
+      try {
+        if (!JSON.parse(json).appointment) return
+      } catch {
+        return
+      }
+      booked = true
+      trackPixel("Lead", { content_name: "Quote call booked" })
+      track("Quote call booked")
+    }
+    window.addEventListener("message", onMessage)
+    return () => window.removeEventListener("message", onMessage)
+  }, [url])
+
   return (
     <div id="book" className="mt-16 scroll-mt-24 animate-rise border-t pt-16">
       <div className="mb-8 max-w-2xl">

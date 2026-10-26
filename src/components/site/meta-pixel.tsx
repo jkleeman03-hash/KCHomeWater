@@ -7,6 +7,11 @@ import { site } from "@/lib/site"
 
 type Fbq = (...args: unknown[]) => void
 
+// Sends a standard Meta event, e.g. "Lead". Never pass the visitor's name, phone, email, or ZIP.
+export function trackPixel(event: string, params?: Record<string, string>) {
+  ;(window as { fbq?: Fbq }).fbq?.("track", event, params)
+}
+
 // Meta's standard pixel snippet. It tracks the first PageView itself; later in-site navigations don't reload the page,
 // so the effect below tracks a PageView for each of those.
 export function MetaPixel() {
@@ -18,7 +23,7 @@ export function MetaPixel() {
       firstRender.current = false
       return
     }
-    ;(window as { fbq?: Fbq }).fbq?.("track", "PageView")
+    trackPixel("PageView")
   }, [pathname])
 
   return (
