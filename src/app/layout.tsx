@@ -10,7 +10,7 @@ import "./globals.css"
 const manrope = Manrope({ variable: "--font-manrope", subsets: ["latin"] })
 const plexMono = IBM_Plex_Mono({ variable: "--font-plex-mono", subsets: ["latin"], weight: ["400", "500"] })
 // Only used for the logo's wordmark
-const fraunces = Fraunces({ variable: "--font-fraunces", subsets: ["latin"], weight: ["700"] })
+const fraunces = Fraunces({ variable: "--font-fraunces", subsets: ["latin"], weight: ["900"] })
 
 export const metadata: Metadata = {
   metadataBase: new URL(site.url),

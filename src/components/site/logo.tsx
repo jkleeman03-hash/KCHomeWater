@@ -2,29 +2,43 @@ import { useId } from "react"
 import Link from "next/link"
 import { cn } from "@/lib/utils"
 
-// Brand logo (original file: public/logo.svg). Inlined so the wordmark renders in Fraunces.
+// Brand logo (original file: public/logo.svg, traced from Brand Assets/KC_Home_Water_Logo.png).
+// Inlined so the wordmark renders in Fraunces.
 // The light variant is for dark backgrounds: navy becomes white and the blues are lightened.
 export function LogoMark({ light = false, className }: { light?: boolean; className?: string }) {
-  const gradientId = useId()
-  const ink = light ? "#ffffff" : "#13294B"
-  const [blueDark, blueLight] = light ? ["#6FA8DC", "#A9CCEC"] : ["#2E5F94", "#6FA8DC"]
+  const id = useId()
+  const ink = light ? "#ffffff" : "#012561"
+  const [blueDark, blueLight] = light ? ["#4FA3E8", "#9AD8FA"] : ["#0148A2", "#29B0F3"]
 
   return (
-    <svg viewBox="58 33 164 148" role="img" aria-label="KC Home Water" className={cn("h-16 w-auto", className)}>
+    <svg viewBox="40 52 1222 1038" role="img" aria-label="KC Home Water" className={cn("h-16 w-auto", className)}>
       <defs>
-        <linearGradient id={gradientId} x1="0" y1="0" x2="1" y2="0">
+        <linearGradient id={`${id}-wave`} gradientUnits="userSpaceOnUse" x1="320" y1="0" x2="980" y2="0">
           <stop offset="0%" stopColor={blueDark} />
           <stop offset="100%" stopColor={blueLight} />
         </linearGradient>
+        <linearGradient id={`${id}-left`} x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stopColor={blueDark} />
+          <stop offset="100%" stopColor={light ? blueDark : "#003A85"} />
+        </linearGradient>
+        <linearGradient id={`${id}-right`} x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stopColor={blueLight} />
+          <stop offset="100%" stopColor={light ? blueLight : "#1590DE"} />
+        </linearGradient>
       </defs>
-      <path d="M65,110 L140,40 L215,110 L215,175 L65,175 Z" fill="none" stroke={ink} strokeWidth="7" strokeLinejoin="round" />
-      <text x="140" y="100" textAnchor="middle" fontSize="22" letterSpacing="1" fill={ink} className="font-logo font-bold">
+      <path d="M81,1050 L81,500 L651,96 L1221,500 L1221,1050 Z" fill="none" stroke={ink} strokeWidth="58" strokeLinejoin="round" />
+      <text x="644" y="540" textAnchor="middle" fontSize="272" fill={ink} className="font-logo font-black">
         KC
       </text>
-      <path d="M95,123 Q120,112 140,123 Q160,134 185,123" fill="none" stroke={`url(#${gradientId})`} strokeWidth="5.5" strokeLinecap="round" />
-      <path d="M95,112 C89,118 87,121 87,125 C87,130 90,134 95,134 C100,134 103,130 103,125 C103,121 101,118 95,112 Z" fill={blueDark} />
-      <path d="M185,112 C179,118 177,121 177,125 C177,130 180,134 185,134 C190,134 193,130 193,125 C193,121 191,118 185,112 Z" fill={blueLight} />
-      <text x="140" y="158" textAnchor="middle" fontSize="16" letterSpacing="2" fill={ink} className="font-logo font-bold">
+      <path
+        d="M318,636 C420,588 560,594 662,640 C770,690 880,702 976,650 L968,692 C880,738 760,736 650,690 C550,650 440,642 330,670 Z"
+        fill={`url(#${id}-wave)`}
+      />
+      <path d="M247,560 C226,588 178,640 178,686 C178,726 210,754 248,754 C286,754 318,726 318,686 C318,640 268,588 247,560 Z" fill={`url(#${id}-left)`} />
+      <path d="M207,640 C188,672 190,718 238,746 C212,720 202,690 214,642 Z" fill="#ffffff" />
+      <path d="M1056,563 C1035,591 986,642 986,688 C986,728 1018,754 1056,754 C1094,754 1126,728 1126,688 C1126,642 1077,591 1056,563 Z" fill={`url(#${id}-right)`} />
+      <path d="M1097,642 C1116,674 1114,720 1066,746 C1092,720 1102,690 1090,644 Z" fill="#ffffff" />
+      <text x="652" y="934" textAnchor="middle" fontSize="166" textLength="1044" lengthAdjust="spacingAndGlyphs" fill={ink} className="font-logo font-black">
         HOME WATER
       </text>
     </svg>
