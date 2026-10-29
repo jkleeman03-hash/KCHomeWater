@@ -1,4 +1,5 @@
 import Image from "next/image"
+import Link from "next/link"
 import { Section } from "@/components/site/section"
 
 const reasons = [
@@ -31,6 +32,14 @@ export function WhyUs() {
             Some water treatment companies send a salesperson to your kitchen for a two-hour demo that ends in a
             high-pressure close. We don&apos;t work that way. We give you honest advice, fair upfront pricing, and
             professional installation.
+          </p>
+          <p className="mt-4 leading-relaxed">
+            We&apos;re Joey and Anna Kleeman. Joey grew up in Denver and Anna in Columbia, Missouri, and much of our
+            family and many of our closest friends live here in the metro. We started KC Home Water so Kansas City
+            families can get great water at a fair price.{" "}
+            <Link href="/blog/who-we-are" className="font-medium underline underline-offset-4">
+              Read our story
+            </Link>
           </p>
           <div className="relative mt-8 aspect-[4/3] overflow-hidden rounded-2xl">
             <Image
