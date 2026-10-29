@@ -43,7 +43,12 @@ export default function PrivacyPage() {
           <a href="https://www.facebook.com/adpreferences/" target="_blank" rel="noopener noreferrer">
             Meta ad preferences
           </a>{" "}
-          or by blocking cookies in your browser.
+          or by blocking cookies in your browser. We also use the Google Ads tag, which sets cookies and tells Google
+          which pages you visit so we can measure and show our Google ads. You can manage this in your{" "}
+          <a href="https://myadcenter.google.com/" target="_blank" rel="noopener noreferrer">
+            Google ad settings
+          </a>
+          .
         </li>
       </ul>
 
